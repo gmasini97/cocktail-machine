@@ -1,9 +1,11 @@
 #include "pyd_stepper.h"
+#include "pyd_servo.h"
 #include "config.h"
 
 FastAccelStepperEngine engine = FastAccelStepperEngine();
 
 PYD_Stepper *carriage;
+PYD_Servo *servo;
 
 void setup() {
   Serial.begin(115200);
@@ -23,6 +25,9 @@ void setup() {
   carriage->setDynamics(STEPPER1_SPEED_IN_HZ, STEPPER1_ACCELERATION);
   Serial.println("Carriage home");
   carriage->home();
+
+  servo = new PYD_Servo(SERVO_PIN);
+  servo->test();
 }
 
 void loop() {

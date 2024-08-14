@@ -6,3 +6,5 @@
 #define STEPPER1_REVERSE_DIRECTION true    // true or false
 #define STEPPER1_SPEED_IN_HZ 1600
 #define STEPPER1_ACCELERATION 1000
+
+#define SERVO_PIN 25
