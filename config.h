@@ -9,6 +9,7 @@
 #define DEFAULT_POUR_RATE         12.0    // mL/s
 #define DEFAULT_SERVO_POUR_ANGLE  60      // degrees
 #define DEFAULT_SERVO_IDLE_ANGLE  40      // degrees
+#define DEFAULT_AUTO_SAVE         false   //
 
 // I2C Display
 #define DISPLAY_PIN_SDA 21
