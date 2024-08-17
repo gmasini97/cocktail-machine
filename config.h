@@ -6,7 +6,7 @@
 #define STEPPER1_MAX_TRAVEL_MM 1000
 
 // Menu
-#define MAX_DEPTH 3
+#define MENU_MAX_DEPTH 3
 
 // Default Preferences
 #define DEFAULT_BOTTLE_QUANTITY   0       // mL
