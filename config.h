@@ -1,6 +1,15 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+// Default Preferences
+#define DEFAULT_BOTTLE_QUANTITY   0       // mL
+#define DEFAULT_BOTTLE_POSITION   0       // mm
+#define DEFAULT_POUR_REFILL_TIME  5000    // ms
+#define DEFAULT_POUR_DEAD_TIME    1000    // ms
+#define DEFAULT_POUR_RATE         12.0    // mL/s
+#define DEFAULT_SERVO_POUR_ANGLE  60      // degrees
+#define DEFAULT_SERVO_IDLE_ANGLE  40      // degrees
+
 // I2C Display
 #define DISPLAY_PIN_SDA 21
 #define DISPLAY_PIN_SCL 22
