@@ -1,6 +1,10 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+// Machine Settings
+#define BOTTLES_NUM 8
+#define STEPPER1_MAX_TRAVEL_MM 1000
+
 // Default Preferences
 #define DEFAULT_BOTTLE_QUANTITY   0       // mL
 #define DEFAULT_BOTTLE_POSITION   0       // mm
