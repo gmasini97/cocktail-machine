@@ -8,7 +8,8 @@
 // Menu
 #define MENU_MAX_DEPTH 3
 
-// Default Preferences
+// Preferences
+#define PREFERENCES_NAMESPACE    "cocktail"
 #define DEFAULT_BOTTLE_QUANTITY   0       // mL
 #define DEFAULT_BOTTLE_POSITION   0       // mm
 #define DEFAULT_POUR_REFILL_TIME  5000    // ms
