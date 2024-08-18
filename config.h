@@ -25,9 +25,9 @@
 #define DISPLAY_ROWS    4
 
 // Rotary Encoder
-#define ENCODER_PIN_CLK 12
-#define ENCODER_PIN_DT  14
-#define ENCODER_PIN_SW0 13
+#define ENCODER_PIN_A       12
+#define ENCODER_PIN_B       14
+#define ENCODER_PIN_BUTTON  13
 
 // RFID Reader SPI (RC522)
 #define RFID_PIN_MOSI  23
