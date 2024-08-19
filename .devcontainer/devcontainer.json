@@ -14,5 +14,6 @@
         "cocktail-machine.ino"
       ]
     }
-  }
+  },
+  "onCreateCommand": "curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh -s 1.0.4"
 }
