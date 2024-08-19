@@ -1,19 +1,21 @@
 {
-  "image": "mcr.microsoft.com/devcontainers/universal:2",
-  "features": {
-  },
+  "name": "ESP32 Cocktail Machine Firmware",
+  "build": { "dockerfile": "Dockerfile" },
+
   "customizations": {
     "vscode": {
       "extensions": [
         "vsciot-vscode.vscode-arduino",
         "ms-vscode.cpptools-extension-pack"
-      ]
+      ],
+      "settings": {
+        "arduino.path": "/usr/local/bin/arduino-cli"
+      }
     },
     "codespaces": {
       "openFiles": [
         "cocktail-machine.ino"
       ]
     }
-  },
-  "postCreateCommand": "curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh"
+  }
 }
