@@ -10,7 +10,7 @@
       ],
       "settings": {
         "arduino.commandPath": "arduino-cli",
-        "arduino.path": "/usr/local/bin",
+        "arduino.path": "/usr/bin",
         "arduino.useArduinoCli": true
       }
     },
