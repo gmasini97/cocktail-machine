@@ -2,6 +2,24 @@ ARG ARDUINO_CLI_VERSION=1.0.4
 
 FROM mcr.microsoft.com/devcontainers/universal:2
 
+# Install Arduino Prerequisites
+RUN ["dash", "-c", "\
+    apt-get update --quiet \
+    && apt-get install --assume-yes --no-install-recommends --quiet \
+        bash \
+        bash-completion \
+        ca-certificates \
+        curl \
+        python-is-python3 \
+        python3 \
+        python3-pip \
+        ssh \
+        tree \
+    && pip install \
+        adafruit-nrfutil \
+        pyserial \
+"]
+
 # Install arduino-cli as root
 RUN curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh -s ${ARDUINO_CLI_VERSION}
 
