@@ -67,7 +67,7 @@
 #define STEPPER2_ACCELERATION 1000
 
 // Servo Motor Pouring
-#define SERVO_PIN 25
+#define SERVO1_PIN 25
 
 // Servo Motor 2
 #define SERVO2_PIN 26
