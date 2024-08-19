@@ -1,14 +1,10 @@
-
 #include "pyd_preferences.h"
 
-PYD_Preferences::PYD_Preferences()
-{
+PYD_Preferences Prefs;
 
-}
-
-bool PYD_Preferences::begin()
+bool PYD_Preferences::begin(const char* name)
 {
-  if(!prefs.begin("cocktail"))
+  if(!mPreferences.begin(name))
     return false;
   loadAll();
   return true;
@@ -16,7 +12,7 @@ bool PYD_Preferences::begin()
 
 void PYD_Preferences::end()
 {
-  prefs.end();
+  mPreferences.end();
 }
 
 void PYD_Preferences::loadAll()
@@ -27,24 +23,24 @@ void PYD_Preferences::loadAll()
     bottleQuantity[i] = DEFAULT_BOTTLE_QUANTITY;
     bottlePosition[i] = DEFAULT_BOTTLE_POSITION;
   }
-  prefs.getBytes("bottleContent", &bottleContent, sizeof(bottleContent));
-  prefs.getBytes("bottleQuantity", &bottleQuantity, sizeof(bottleQuantity));
-  prefs.getBytes("bottlePosition", &bottlePosition, sizeof(bottlePosition));
-  pourRefillTime  = prefs.getShort("pourRefillTime", DEFAULT_POUR_REFILL_TIME);
-  pourDeadTime    = prefs.getShort("pourDeadTime", DEFAULT_POUR_DEAD_TIME);
-  pourRate        = prefs.getFloat("pourRate", DEFAULT_POUR_RATE);
-  servoPourAngle  = prefs.getShort("servoPourAngle", DEFAULT_SERVO_POUR_ANGLE);
-  servoIdleAngle  = prefs.getShort("servoIdleAngle", DEFAULT_SERVO_IDLE_ANGLE);
+  mPreferences.getBytes("bottleContent", &bottleContent, sizeof(bottleContent));
+  mPreferences.getBytes("bottleQuantity", &bottleQuantity, sizeof(bottleQuantity));
+  mPreferences.getBytes("bottlePosition", &bottlePosition, sizeof(bottlePosition));
+  pourRefillTime  = mPreferences.getShort("pourRefillTime", DEFAULT_POUR_REFILL_TIME);
+  pourDeadTime    = mPreferences.getShort("pourDeadTime", DEFAULT_POUR_DEAD_TIME);
+  pourRate        = mPreferences.getFloat("pourRate", DEFAULT_POUR_RATE);
+  servoPourAngle  = mPreferences.getShort("servoPourAngle", DEFAULT_SERVO_POUR_ANGLE);
+  servoIdleAngle  = mPreferences.getShort("servoIdleAngle", DEFAULT_SERVO_IDLE_ANGLE);
 }
 
 void PYD_Preferences::saveAll()
 {
-  prefs.putBytes("bottleContent", (byte*)(&bottleContent), sizeof(bottleContent));
-  prefs.putBytes("bottleQuantity", (byte*)(&bottleQuantity), sizeof(bottleQuantity));
-  prefs.putBytes("bottlePosition", (byte*)(&bottlePosition), sizeof(bottlePosition));
-  prefs.putShort("pourRefillTime", pourRefillTime);
-  prefs.putShort("pourDeadTime", pourDeadTime);
-  prefs.putFloat("pourRate", pourRate);
-  prefs.putShort("servoPourAngle", servoPourAngle);
-  prefs.putShort("servoIdleAngle", servoIdleAngle);
+  mPreferences.putBytes("bottleContent", (byte*)(&bottleContent), sizeof(bottleContent));
+  mPreferences.putBytes("bottleQuantity", (byte*)(&bottleQuantity), sizeof(bottleQuantity));
+  mPreferences.putBytes("bottlePosition", (byte*)(&bottlePosition), sizeof(bottlePosition));
+  mPreferences.putShort("pourRefillTime", pourRefillTime);
+  mPreferences.putShort("pourDeadTime", pourDeadTime);
+  mPreferences.putFloat("pourRate", pourRate);
+  mPreferences.putShort("servoPourAngle", servoPourAngle);
+  mPreferences.putShort("servoIdleAngle", servoIdleAngle);
 }
