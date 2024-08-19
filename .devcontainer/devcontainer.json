@@ -1,7 +1,6 @@
 {
   "name": "ESP32 Cocktail Machine Firmware",
   "build": { "dockerfile": "Dockerfile" },
-  "remoteUser": "maker",
 
   "customizations": {
     "vscode": {
