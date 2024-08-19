@@ -2,6 +2,7 @@
 #define CONFIG_H
 
 // Machine Settings
+#define SERIAL_BAUD_RATE 115200
 #define BOTTLES_NUM 8
 #define STEPPER1_MAX_TRAVEL_MM 1000
 
