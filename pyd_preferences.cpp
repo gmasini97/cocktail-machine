@@ -35,7 +35,6 @@ void PYD_Preferences::loadAll()
   pourRate        = prefs.getFloat("pourRate", DEFAULT_POUR_RATE);
   servoPourAngle  = prefs.getShort("servoPourAngle", DEFAULT_SERVO_POUR_ANGLE);
   servoIdleAngle  = prefs.getShort("servoIdleAngle", DEFAULT_SERVO_IDLE_ANGLE);
-  autoSave        = prefs.getBool("autoSave", DEFAULT_AUTO_SAVE);
 }
 
 void PYD_Preferences::saveAll()
