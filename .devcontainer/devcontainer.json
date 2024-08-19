@@ -9,7 +9,9 @@
         "ms-vscode.cpptools-extension-pack"
       ],
       "settings": {
-        "arduino.path": "/usr/local/bin/arduino-cli"
+        "arduino.commandPath": "arduino-cli",
+        "arduino.path": "/usr/local/bin",
+        "arduino.useArduinoCli": true
       }
     },
     "codespaces": {
