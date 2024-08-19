@@ -1,92 +1,106 @@
 {
-    "version": 1,
-    "author": "Mirco Pergreffi",
-    "editor": "wokwi",
-    "parts": [
-      { "type": "board-esp32-devkit-v1", "id": "esp", "top": -76.8, "left": 43.24, "attrs": {} },
-      {
-        "type": "wokwi-lcd2004",
-        "id": "lcd2",
-        "top": -80,
-        "left": 245.6,
-        "attrs": { "pins": "i2c" }
-      },
-      {
-        "type": "wokwi-ky-040",
-        "id": "encoder1",
-        "top": -25.8,
-        "left": 606.1,
-        "rotate": 90,
-        "attrs": {}
-      },
-      {
-        "type": "wokwi-servo",
-        "id": "servo1",
-        "top": 245.8,
-        "left": 433,
-        "rotate": 90,
-        "attrs": {}
-      },
-      {
-        "type": "wokwi-stepper-motor",
-        "id": "stepper1",
-        "top": 242.53,
-        "left": 295.29,
-        "rotate": 90,
-        "attrs": { "size": "17" }
-      },
-      { "type": "wokwi-a4988", "id": "drv1", "top": 283.2, "left": 187.2, "attrs": {} },
-      { "type": "wokwi-hc-sr04", "id": "ultrasonic1", "top": -238.5, "left": 322.3, "attrs": {} },
-      {
-        "type": "wokwi-dip-switch-8",
-        "id": "sw1",
-        "top": 303.5,
-        "left": 78.3,
-        "rotate": 90,
-        "attrs": {}
-      }
+  "version": 1,
+  "author": "Mirco Pergreffi",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-v1", "id": "esp", "top": -76.8, "left": 43.24, "attrs": {} },
+    {
+      "type": "wokwi-lcd2004",
+      "id": "lcd2",
+      "top": -80,
+      "left": 245.6,
+      "attrs": { "pins": "i2c" }
+    },
+    {
+      "type": "wokwi-ky-040",
+      "id": "encoder1",
+      "top": -25.8,
+      "left": 606.1,
+      "rotate": 90,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo1",
+      "top": 245.8,
+      "left": 433,
+      "rotate": 90,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-stepper-motor",
+      "id": "stepper1",
+      "top": 242.53,
+      "left": 295.29,
+      "rotate": 90,
+      "attrs": { "size": "17" }
+    },
+    { "type": "wokwi-a4988", "id": "drv1", "top": 283.2, "left": 187.2, "attrs": {} },
+    { "type": "wokwi-hc-sr04", "id": "ultrasonic1", "top": -238.5, "left": 322.3, "attrs": {} },
+    {
+      "type": "wokwi-dip-switch-8",
+      "id": "sw1",
+      "top": 303.5,
+      "left": 78.3,
+      "rotate": 90,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 22.6,
+      "left": 162.35,
+      "rotate": 270,
+      "attrs": { "value": "10000" }
+    },
+    { "type": "wokwi-slide-switch", "id": "sw2", "top": -197.2, "left": 99.1, "attrs": {} }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "esp:D21", "lcd2:SDA", "green", [ "h57.07", "v-12.32" ] ],
+    [ "esp:D22", "lcd2:SCL", "blue", [ "h66.67", "v26.08" ] ],
+    [ "esp:GND.1", "lcd2:GND", "black", [ "h76.27", "v-117.92", "h28.8" ] ],
+    [ "esp:VIN", "lcd2:VCC", "red", [ "h-28.84", "v54.88", "h211.2", "v-172.9" ] ],
+    [ "encoder1:GND", "esp:GND.1", "black", [ "v48", "h-432.8", "v-48" ] ],
+    [ "encoder1:VCC", "esp:3V3", "orange", [ "v57.6", "h-451.6", "v-48" ] ],
+    [ "encoder1:CLK", "esp:D12", "violet", [ "v96", "h-700.8", "v-112.48" ] ],
+    [ "encoder1:DT", "esp:D14", "purple", [ "v86.4", "h-681.7", "v-112.48" ] ],
+    [ "encoder1:SW", "esp:D13", "gold", [ "v76.8", "h-662.5", "v-76.8" ] ],
+    [ "drv1:STEP", "esp:D2", "gray", [ "h-19.2", "v-304.48" ] ],
+    [ "drv1:DIR", "esp:D15", "cyan", [ "h-28.8", "v-304.48" ] ],
+    [ "drv1:ENABLE", "esp:D27", "#8f4814", [ "v-19.2", "h-211.2", "v-237.28" ] ],
+    [ "drv1:1A", "stepper1:A+", "red", [ "h28.95", "v-9.52" ] ],
+    [ "drv1:1B", "stepper1:B+", "green", [ "h38.55", "v-9.52" ] ],
+    [ "drv1:2A", "stepper1:A-", "blue", [ "h19.35", "v-9.52" ] ],
+    [ "drv1:2B", "stepper1:B-", "white", [ "h28.95", "v38.49" ] ],
+    [ "sw1:1b", "drv1:MS1", "gold", [ "h0" ] ],
+    [ "sw1:2b", "drv1:MS2", "gold", [ "h0" ] ],
+    [ "sw1:3b", "drv1:MS3", "gold", [ "h0" ] ],
+    [ "sw1:3a", "esp:3V3", "orange", [ "h-19.2", "v-86.4", "h134.4", "v-153.6" ] ],
+    [ "sw1:1a", "esp:3V3", "orange", [ "h-19.2", "v-67.2", "h134.4", "v-153.6" ] ],
+    [ "sw1:2a", "esp:3V3", "orange", [ "h-19.2", "v-76.8", "h134.4", "v-144" ] ],
+    [ "drv1:GND.2", "esp:GND.1", "black", [ "h19.35", "v-124.72", "h-38.4", "v-96" ] ],
+    [ "drv1:VMOT", "esp:VIN", "red", [ "h0.15", "v-105.52", "h-220.8", "v-105.6" ] ],
+    [ "drv1:GND.1", "esp:GND.1", "black", [ "v0.08", "h19.35", "v-182.4", "h-38.4", "v-105.6" ] ],
+    [
+      "drv1:VDD",
+      "esp:3V3",
+      "orange",
+      [ "h9.75", "v38.48", "h-172.8", "v-153.6", "h134.4", "v-153.6" ]
     ],
-    "connections": [
-      [ "esp:TX", "$serialMonitor:RX", "", [] ],
-      [ "esp:RX", "$serialMonitor:TX", "", [] ],
-      [ "esp:D21", "lcd2:SDA", "green", [ "h57.07", "v-12.32" ] ],
-      [ "esp:D22", "lcd2:SCL", "blue", [ "h66.67", "v26.08" ] ],
-      [ "esp:GND.1", "lcd2:GND", "black", [ "h76.27", "v-117.92", "h28.8" ] ],
-      [ "esp:VIN", "lcd2:VCC", "red", [ "h-28.84", "v54.88", "h211.2", "v-172.9" ] ],
-      [ "encoder1:GND", "esp:GND.1", "black", [ "v48", "h-432.8", "v-48" ] ],
-      [ "encoder1:VCC", "esp:3V3", "orange", [ "v57.6", "h-451.6", "v-48" ] ],
-      [ "encoder1:CLK", "esp:D12", "violet", [ "v96", "h-700.8", "v-112.48" ] ],
-      [ "encoder1:DT", "esp:D14", "purple", [ "v86.4", "h-681.7", "v-112.48" ] ],
-      [ "encoder1:SW", "esp:D13", "gold", [ "v76.8", "h-662.5", "v-76.8" ] ],
-      [ "drv1:STEP", "esp:D2", "gray", [ "h-19.2", "v-304.48" ] ],
-      [ "drv1:DIR", "esp:D15", "cyan", [ "h-28.8", "v-304.48" ] ],
-      [ "drv1:ENABLE", "esp:D27", "#8f4814", [ "v-19.2", "h-211.2", "v-237.28" ] ],
-      [ "drv1:1A", "stepper1:A+", "red", [ "h28.95", "v-9.52" ] ],
-      [ "drv1:1B", "stepper1:B+", "green", [ "h38.55", "v-9.52" ] ],
-      [ "drv1:2A", "stepper1:A-", "blue", [ "h19.35", "v-9.52" ] ],
-      [ "drv1:2B", "stepper1:B-", "white", [ "h28.95", "v38.49" ] ],
-      [ "sw1:1b", "drv1:MS1", "gold", [ "h0" ] ],
-      [ "sw1:2b", "drv1:MS2", "gold", [ "h0" ] ],
-      [ "sw1:3b", "drv1:MS3", "gold", [ "h0" ] ],
-      [ "sw1:3a", "esp:3V3", "orange", [ "h-19.2", "v-86.4", "h134.4", "v-153.6" ] ],
-      [ "sw1:1a", "esp:3V3", "orange", [ "h-19.2", "v-67.2", "h134.4", "v-153.6" ] ],
-      [ "sw1:2a", "esp:3V3", "orange", [ "h-19.2", "v-76.8", "h134.4", "v-144" ] ],
-      [ "drv1:GND.2", "esp:GND.1", "black", [ "h19.35", "v-124.72", "h-38.4", "v-96" ] ],
-      [ "drv1:VMOT", "esp:VIN", "red", [ "h0.15", "v-105.52", "h-220.8", "v-105.6" ] ],
-      [ "drv1:GND.1", "esp:GND.1", "black", [ "v0.08", "h19.35", "v-182.4", "h-38.4", "v-105.6" ] ],
-      [
-        "drv1:VDD",
-        "esp:3V3",
-        "orange",
-        [ "h9.75", "v38.48", "h-172.8", "v-153.6", "h134.4", "v-153.6" ]
-      ],
-      [ "servo1:GND", "esp:GND.1", "black", [ "v-48", "h-307.2", "v-96" ] ],
-      [ "servo1:V+", "esp:VIN", "red", [ "v-38.4", "h-499.3", "v-105.6" ] ],
-      [ "servo1:PWM", "esp:D25", "white", [ "v-28.8", "h-537.8", "v-172.8" ] ],
-      [ "ultrasonic1:VCC", "esp:VIN", "red", [ "v48", "h-163.2", "v230.4", "h-211.2", "v-57.6" ] ],
-      [ "ultrasonic1:GND", "esp:GND.1", "black", [ "v38.4", "h-202.8", "v172.8" ] ],
-      [ "ultrasonic1:TRIG", "esp:D33", "green", [ "v19.2", "h-384.4", "v127.52" ] ],
-      [ "ultrasonic1:ECHO", "esp:VP", "blue", [ "v28.8", "h-384.8", "v79.52" ] ]
-    ],
-    "dependencies": {}
-  }
+    [ "servo1:GND", "esp:GND.1", "black", [ "v-48", "h-307.2", "v-96" ] ],
+    [ "servo1:V+", "esp:VIN", "red", [ "v-38.4", "h-499.3", "v-105.6" ] ],
+    [ "servo1:PWM", "esp:D25", "white", [ "v-28.8", "h-537.8", "v-172.8" ] ],
+    [ "ultrasonic1:VCC", "esp:VIN", "red", [ "v48", "h-163.2", "v230.4", "h-211.2", "v-57.6" ] ],
+    [ "ultrasonic1:GND", "esp:GND.1", "black", [ "v38.4", "h-202.8", "v172.8" ] ],
+    [ "ultrasonic1:TRIG", "esp:D33", "green", [ "v19.2", "h-384.4", "v127.52" ] ],
+    [ "ultrasonic1:ECHO", "esp:VP", "blue", [ "v28.8", "h-384.8", "v79.52" ] ],
+    [ "r1:1", "esp:3V3", "orange", [ "h0", "v19.2" ] ],
+    [ "drv1:SLEEP", "drv1:RESET", "magenta", [ "h-9.6", "v-9.6" ] ],
+    [ "sw2:2", "esp:GND.1", "black", [ "v19.2", "h105.7", "v213.92" ] ],
+    [ "esp:D35", "sw2:1", "violet", [ "h-38.44", "v-117.92", "h96", "v-28.8" ] ],
+    [ "r1:2", "sw2:1", "violet", [ "h0", "v-133.2", "h-86.4" ] ]
+  ],
+  "dependencies": {}
+}
