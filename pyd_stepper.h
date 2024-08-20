@@ -14,7 +14,8 @@ class PYD_Stepper {
             int pinEndstop = -1,
             int endstopActiveLow = 0,
             bool directionReverse = false
-        ) : mPinStep(pinStep),
+        ) : mEngine(engine),
+            mPinStep(pinStep),
             mPinDir(pinDir),
             mPinEn(pinEn),
             mPinEndstop(pinEndstop),
