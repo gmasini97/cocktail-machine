@@ -76,7 +76,7 @@ MENU(cocktailsMenu,"Prepara Cocktail",doNothing,noEvent,wrapStyle
     ,OP("op1",doNothing,noEvent)
     ,EXIT("Indietro")
 );
-SELECT(bottleContent,bottleContentMenu,"Contenuto",doNothing,noEvent,noStyle
+SELECT(bottleContent,bottleContentMenu,"",doNothing,noEvent,noStyle
     ,VALUE("Gin",0,doNothing,noEvent)
     ,VALUE("Vodka",1,doNothing,noEvent)
     ,VALUE("Rum",2,doNothing,noEvent)
