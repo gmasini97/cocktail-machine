@@ -31,5 +31,6 @@ RUN arduino-cli config init \
     && arduino-cli lib install "ArduinoMenu library"@4.21.4 \
     && arduino-cli lib install QDEC@2.1.0 \
     && arduino-cli lib install FastAccelStepper@0.30.14 \
-    && arduino-cli lib install ESP32Servo@3.0.5 \
-    && cd ~/Arduino && git clone https://github.com/fmalpartida/New-LiquidCrystal
+    && arduino-cli lib install ESP32Servo@3.0.5
+WORKDIR /home/codespace/Arduino/libraries
+RUN git clone https://github.com/fmalpartida/New-LiquidCrystal
