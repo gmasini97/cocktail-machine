@@ -132,6 +132,7 @@ void setup() {
 
     // Initialize Stepper
     stepperEngine.init();
+    stepperCarriage.begin();
     stepperCarriage.setDynamics(STEPPER1_SPEED_IN_HZ, STEPPER1_ACCELERATION);
 
     // Initialize Rotary Encoder

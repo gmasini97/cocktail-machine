@@ -1,36 +1,34 @@
 #include "pyd_stepper.h"
 
-PYD_Stepper::PYD_Stepper(FastAccelStepperEngine *engine, int pin_step, int pin_direction, int pin_enable, int pin_endstop, int endstop_active_low, bool direction_reverse)
-{
-  this->stepper = engine->stepperConnectToPin(pin_step);
-  this->stepper->setDirectionPin(pin_direction, direction_reverse);
-  this->stepper->setEnablePin(pin_enable);
-  this->stepper->setAutoEnable(true);
-
-  this->pin_endstop = pin_endstop;
-  this->endstop_active_low = endstop_active_low;
-  pinMode(pin_endstop, INPUT);
+void PYD_Stepper::begin() {
+    mStepper = mEngine->stepperConnectToPin(mPinStep);
+    mStepper->setDirectionPin(mPinDir, mDirectionReverse);
+    mStepper->setEnablePin(mPinEn);
+    mStepper->setAutoEnable(true);
+    pinMode(mPinEndstop, INPUT);
 }
 
-FastAccelStepper *PYD_Stepper::getFastAccelStepper() {
-  return this->stepper;
+void PYD_Stepper::end() {
+
+}
+
+FastAccelStepper* PYD_Stepper::getFastAccelStepper() {
+    return mStepper;
 }
 
 void PYD_Stepper::setDynamics(int speed_in_hertz, int acceleration) {
-  this->stepper->setSpeedInHz(speed_in_hertz);
-  this->stepper->setAcceleration(acceleration);
+    mStepper->setSpeedInHz(speed_in_hertz);
+    mStepper->setAcceleration(acceleration);
 }
 
 int PYD_Stepper::readEndstop() {
-  return digitalRead(this->pin_endstop) ^ this->endstop_active_low;
+    return digitalRead(mPinEndstop) ^ mEndstopActiveLow;
 }
 
 void PYD_Stepper::home() {
-  Serial.println("Homing...");
-  this->stepper->runBackward();
-  while (!this->readEndstop()) {}
-  this->stepper->forceStopAndNewPosition(0);
-  Serial.println("Homing done.");
+    mStepper->runBackward();
+    while (!readEndstop()) {}
+    mStepper->forceStopAndNewPosition(0);
 }
 
 

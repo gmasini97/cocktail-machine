@@ -5,19 +5,40 @@
 #include "AVRStepperPins.h" // Only required for AVR controllers
 
 class PYD_Stepper {
-  public:
-    PYD_Stepper(FastAccelStepperEngine *engine, int pin_step, int pin_direction, int pin_enable, int pin_endstop, int endstop_active_low, bool direction_reverse);
+    public:
+        PYD_Stepper(
+            FastAccelStepperEngine *engine,
+            int pinStep,
+            int pinDir,
+            int pinEn,
+            int pinEndstop = -1,
+            int endstopActiveLow = 0,
+            bool directionReverse = false
+        ) : mPinStep(pinStep),
+            mPinDir(pinDir),
+            mPinEn(pinEn),
+            mPinEndstop(pinEndstop),
+            mEndstopActiveLow(endstopActiveLow),
+            mDirectionReverse(directionReverse)
+        {
+        }
 
-    FastAccelStepper *getFastAccelStepper();
-    void setDynamics(int speed_in_hertz, int acceleration);
+        void begin();
+        void end();
 
-    int readEndstop();
-    void move(int amount);
-    void home();
-  private:
-    FastAccelStepper *stepper = NULL;
-    int pin_endstop = -1;
-    int endstop_active_low = 0;
+        FastAccelStepper *getFastAccelStepper();
+        void setDynamics(int speed_in_hertz, int acceleration);
+
+        int readEndstop();
+        void move(int amount);
+        void home();
+        
+    private:
+        int mPinStep, mPinDir, mPinEn, mPinEndstop;
+        int mEndstopActiveLow;
+        bool mDirectionReverse;
+        FastAccelStepper *mStepper = NULL;
+        FastAccelStepperEngine *mEngine;
 };
 
 #endif
