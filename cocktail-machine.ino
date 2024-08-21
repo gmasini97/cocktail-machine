@@ -104,7 +104,7 @@ Menu::select<typeof(bottleContent)> bottleContentMenu (bottleContentMenuShadows.
 MENU(bottlesMenu,"Bottiglie",initBottlesMenu,enterEvent,wrapStyle
     ,FIELD(bottleNumber,"Bottiglia","",1,BOTTLES_NUM,1,0,updateVariables,updateEvent,noStyle)
     ,SUBMENU(bottleContentMenu)
-    ,FIELD(bottleQuantity,"Quantità","mL",0,2000,100,10,updatePreferences,exitEvent,noStyle)
+    ,FIELD(bottleQuantity,"Volume","mL",0,2000,100,10,updatePreferences,exitEvent,noStyle)
     ,EXIT("Indietro")
 );
 MENU(bottlesCalMenu,"Cal. Bottiglie",initBottlesMenu,enterEvent,wrapStyle
