@@ -111,10 +111,15 @@ MENU(calibrationMenu,"Calibrazione",doNothing,noEvent,wrapStyle
     ,SUBMENU(dispenserCalMenu)
     ,EXIT("Indietro")
 );
+void restart()
+{
+    ESP.restart();
+}
 MENU(mainMenu,"Main menu",doNothing,noEvent,wrapStyle
     ,SUBMENU(cocktailsMenu)
     ,SUBMENU(bottlesMenu)
     ,SUBMENU(calibrationMenu)
+    ,OP("Riavvia",restart,enterEvent)
 );
 NAVROOT(nav, mainMenu, MENU_MAX_DEPTH, in, out);
 
