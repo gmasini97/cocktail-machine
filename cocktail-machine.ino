@@ -21,6 +21,7 @@
 #include "pyd_menu.h"
 #include "pyd_stepper.h"
 #include "pyd_servo.h"
+#include "bottles.h"
 
 FastAccelStepperEngine stepperEngine;
 PYD_Stepper stepperCarriage(
@@ -76,13 +77,30 @@ MENU(cocktailsMenu,"Prepara Cocktail",doNothing,noEvent,wrapStyle
     ,OP("op1",doNothing,noEvent)
     ,EXIT("Indietro")
 );
-SELECT(bottleContent,bottleContentMenu,"",doNothing,noEvent,noStyle
-    ,VALUE("Gin",0,doNothing,noEvent)
-    ,VALUE("Vodka",1,doNothing,noEvent)
-    ,VALUE("Rum",2,doNothing,noEvent)
-    ,VALUE("Tonica",3,doNothing,noEvent)
-    ,VALUE("Ginger Beer",4,doNothing,noEvent)
-);
+
+const int PYD_bottles_N = sizeof(PYD_bottles)/sizeof(*PYD_bottles);
+Menu::menuValue<typeof(bottleContent)>* menuValue_data[PYD_bottles_N];
+Menu::prompt* bottleContentMenu_data[PYD_bottles_N];
+void populateBottleContentMenu()
+{
+    for (int i=0; i<PYD_bottles_N; i++)
+    {
+        menuValue_data[i] = new Menu::menuValue<typeof(bottleContent)>(PYD_bottles[i], i);
+        bottleContentMenu_data[i] = menuValue_data[i];
+    }
+}
+const char bottleContentMenu_text[] = "";
+Menu::menuVariantShadows<typeof(bottleContent)> bottleContentMenuShadows = {
+    (Menu::callback)doNothing,
+    ((systemStyles)(Menu::_menuData|Menu::_canNav|Menu::_isVariant|Menu::_parentDraw)),
+    bottleContentMenu_text,
+    noEvent,
+    noStyle,
+    sizeof(bottleContentMenu_data)/sizeof(prompt*),
+    bottleContentMenu_data,
+    &bottleContent
+};
+Menu::select<typeof(bottleContent)> bottleContentMenu (bottleContentMenuShadows.obj);
 MENU(bottlesMenu,"Bottiglie",initBottlesMenu,enterEvent,wrapStyle
     ,FIELD(bottleNumber,"Bottiglia","",1,BOTTLES_NUM,1,1,updateVariables,updateEvent,noStyle)
     ,SUBMENU(bottleContentMenu)
@@ -147,6 +165,7 @@ void setup() {
     lcd.begin(DISPLAY_COLS,DISPLAY_ROWS);
 
     // Menu settings
+    populateBottleContentMenu();
     nav.showTitle=false;
     nav.useUpdateEvent=true;
 
