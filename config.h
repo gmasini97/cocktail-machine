@@ -53,6 +53,7 @@
 #define STEPPER1_ENDSTOP_ACTIVE_LOW 0       // 0 or 1
 #define STEPPER1_REVERSE_DIRECTION true     // true or false
 #define STEPPER1_SPEED 100                  // mm/s
+#define STEPPER1_SPEED_HOMING 10            // mm/s
 #define STEPPER1_ACCELERATION 500           // mm/s^2
 #define STEPPER1_MAX_TRAVEL_MM 1000         // mm
 #define STEPPER1_STEPS_MM 80                // 1/mm
@@ -65,6 +66,7 @@
 #define STEPPER2_ENDSTOP_ACTIVE_LOW 0       // 0 or 1
 #define STEPPER2_REVERSE_DIRECTION true     // true or false
 #define STEPPER2_SPEED 100                  // mm/s
+#define STEPPER2_SPEED_HOMING 10            // mm/s
 #define STEPPER2_ACCELERATION 500           // mm/s^2
 #define STEPPER2_MAX_TRAVEL_MM 1000         // mm
 #define STEPPER2_STEPS_MM 80                // 1/mm
