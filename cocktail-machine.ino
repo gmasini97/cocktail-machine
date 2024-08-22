@@ -107,10 +107,6 @@ Menu::menuVariantShadows<typeof(cocktailNumber)> chooseCocktailMenuShadows={
     &cocktailNumber
 };
 Menu::choose<typeof(cocktailNumber)> chooseCocktailMenu (chooseCocktailMenuShadows.obj);
-// CHOOSE(cocktailNumber,chooseCocktailMenu,"",doNothing,noEvent,noStyle
-//     ,VALUE("First",1,doNothing,noEvent)
-//     ,VALUE("Second",2,doNothing,noEvent)
-// );
 MENU(cocktailsMenu,"Prepara Cocktail",doNothing,noEvent,wrapStyle
     ,SUBMENU(chooseCocktailMenu)
     ,OP("Prepara",doNothing,noEvent)
