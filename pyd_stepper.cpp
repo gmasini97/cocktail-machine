@@ -5,7 +5,9 @@ void PYD_Stepper::begin() {
     mStepper->setDirectionPin(mPinDir, mDirectionReverse);
     mStepper->setEnablePin(mPinEn);
     mStepper->setAutoEnable(true);
+    if (mSpeed > 0)
     mStepper->setSpeedInHz(mmToSteps(mSpeed));
+    if (mAcceleration > 0)
     mStepper->setAcceleration(mmToSteps(mAcceleration));
     pinMode(mPinEndstop, INPUT);
 }
