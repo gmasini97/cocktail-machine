@@ -7,7 +7,7 @@
  *  - https://github.com/SimpleHacks/QDEC
  *  - https://github.com/gin66/FastAccelStepper
  *  - https://github.com/espressif/arduino-esp32/tree/master/libraries/Preferences
- *  - 
+ *  - https://github.com/madhephaestus/ESP32Servo
  *  - 
  */
 
