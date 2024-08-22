@@ -22,6 +22,7 @@
 #include "pyd_stepper.h"
 #include "pyd_servo.h"
 #include "bottles.h"
+#include "cocktails.h"
 
 FastAccelStepperEngine stepperEngine;
 PYD_Stepper stepperCarriage(
@@ -73,8 +74,41 @@ result savePreferences()
     Prefs.saveAll();
     return proceed;
 }
+
+int cocktailNumber = -1;
+const int PYD_cocktails_N = sizeof(PYD_cocktails)/sizeof(*PYD_cocktails);
+Menu::menuValue<typeof(cocktailNumber)>* menuValue_cocktails[PYD_cocktails_N+1];
+Menu::prompt* chooseCocktailMenu_data[PYD_cocktails_N+1];
+void populateCocktailsMenu()
+{
+    menuValue_cocktails[0] = new Menu::menuValue<typeof(cocktailNumber)>("Seleziona Cocktail", -1);
+    chooseCocktailMenu_data[0] = menuValue_cocktails[0];
+    for (int i=0; i<PYD_cocktails_N; i++)
+    {
+        // TODO: check if cocktail ingredients are available on the machine
+        menuValue_cocktails[i+1] = new Menu::menuValue<typeof(cocktailNumber)>(PYD_cocktails[i]->name, i);
+        chooseCocktailMenu_data[i+1] = menuValue_cocktails[i+1];
+    }
+}
+const char chooseCocktailMenu_text[] ="";
+Menu::menuVariantShadows<typeof(cocktailNumber)> chooseCocktailMenuShadows={
+    (Menu::callback)doNothing,
+    ((systemStyles)(Menu::_menuData|Menu::_canNav|Menu::_isVariant)),
+    chooseCocktailMenu_text,
+    noEvent,
+    noStyle,
+    sizeof(chooseCocktailMenu_data)/sizeof(prompt*),
+    chooseCocktailMenu_data,
+    &cocktailNumber
+};
+Menu::choose<typeof(cocktailNumber)> chooseCocktailMenu (chooseCocktailMenuShadows.obj);
+// CHOOSE(cocktailNumber,chooseCocktailMenu,"",doNothing,noEvent,noStyle
+//     ,VALUE("First",1,doNothing,noEvent)
+//     ,VALUE("Second",2,doNothing,noEvent)
+// );
 MENU(cocktailsMenu,"Prepara Cocktail",doNothing,noEvent,wrapStyle
-    ,OP("op1",doNothing,noEvent)
+    ,SUBMENU(chooseCocktailMenu)
+    ,OP("Prepara",doNothing,noEvent)
     ,EXIT("Indietro")
 );
 
@@ -165,6 +199,7 @@ void setup() {
     lcd.begin(DISPLAY_COLS,DISPLAY_ROWS);
 
     // Menu settings
+    populateCocktailsMenu();
     populateBottleContentMenu();
     nav.showTitle=false;
     nav.useUpdateEvent=true;
