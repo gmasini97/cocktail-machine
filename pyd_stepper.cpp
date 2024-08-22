@@ -10,6 +10,7 @@ void PYD_Stepper::begin() {
     mStepper->setSpeedInHz(mmToSteps(mSpeed));
     if (mAcceleration > 0)
     mStepper->setAcceleration(mmToSteps(mAcceleration));
+    if (mPinEndstop >= 0)
     pinMode(mPinEndstop, INPUT);
 }
 
@@ -41,6 +42,8 @@ bool PYD_Stepper::moveToMM(float mm, bool blocking)
 }
 
 void PYD_Stepper::home() {
+    if (mPinEndstop < 0)
+        return;
     mStepper->runBackward();
     while (!readEndstop()) {}
     mStepper->forceStopAndNewPosition(0);
