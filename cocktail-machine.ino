@@ -236,7 +236,10 @@ void setup() {
     // Servo Test
     lcd.setCursor(0,0);
     lcd.print("Servo Test...");
-    servo.test();
+    servo.move(Prefs.servoPourAngle);
+    delay(2000);
+    servo.move(Prefs.servoIdleAngle);
+    delay(2000);
 }
 
 void loop() {
