@@ -107,9 +107,85 @@ Menu::menuVariantShadows<typeof(cocktailNumber)> chooseCocktailMenuShadows={
     &cocktailNumber
 };
 Menu::choose<typeof(cocktailNumber)> chooseCocktailMenu (chooseCocktailMenuShadows.obj);
+
+// Returns the index of the bottle in the Prefs.bottleContent array
+// that contains the ingredient with the given name and quantity
+// Returns -1 if the ingredient is not available
+// Returns -2 if the ingredient is not available but optional
+int bottleAvailable(const PYD_ingredient_t* ingredient)
+{
+    int bottle = bottleAvailable(ingredient->name, ingredient->quantity);
+    if (bottle == -1 && ingredient->optional)
+        return -2;
+    return bottle;
+}
+// Returns the index of the bottle in the Prefs.bottleContent array
+// that contains the ingredient with the given name and quantity
+// Returns -1 if the ingredient is not available
+int bottleAvailable(const char *name, int quantity)
+{
+    int n = sizeof(Prefs.bottleContent)/sizeof(*Prefs.bottleContent);
+    for (int i=0; i<n; i++)
+        if (strcmp(name, PYD_bottles[Prefs.bottleContent[i]]) == 0)
+            if (Prefs.bottleQuantity[i] >= quantity)
+                return i;
+    return -1;
+}
+void prepareCocktail()
+{
+    const PYD_cocktail_t* cocktail = PYD_cocktails[cocktailNumber];
+    // Check if cocktail ingredients are available
+    bool ingredientsAvailable = true;
+    for (int i=0; i<cocktail->len; i++)
+        if (bottleAvailable(&cocktail->ingredients[i]) == -1)
+            ingredientsAvailable = false;
+    if (!ingredientsAvailable)
+    {
+        lcd.setCursor(0,0);
+        lcd.print("Ingredienti mancanti");
+        delay(2000);
+        return;
+    }
+    // Pour the ingredients
+    lcd.setCursor(0,0);
+    lcd.print("Versando:           ");
+    for (int i=0; i<cocktail->len; i++)
+    {
+        int bottle = bottleAvailable(&cocktail->ingredients[i]);
+        if (bottle == -1)
+            continue;
+        if (bottle == -2)
+            continue;
+        // Move the carriage to the bottle
+        stepperCarriage.moveToMM(Prefs.bottlePosition[bottle], true);
+        lcd.print("                    ");
+        lcd.print(PYD_bottles[Prefs.bottleContent[bottle]]);
+        lcd.setCursor(0,1);
+        // Pour the ingredient
+        int toPour = cocktail->ingredients[i].quantity;
+        while (toPour > 0)
+        {
+            if (toPour >= Prefs.pourFullQuantity)
+            {
+                servo.move(Prefs.servoPourAngle);
+                delay(Prefs.pourFullTime);
+                toPour -= Prefs.pourFullQuantity;
+            }
+            else
+            {
+                servo.move(Prefs.servoPourAngle);
+                delay(round((float)(1000*toPour)/Prefs.pourRate) + Prefs.pourDeadTime);
+                toPour = 0;
+            }
+            servo.move(Prefs.servoIdleAngle);
+            if (toPour > 0)
+                delay(Prefs.pourRefillTime);
+        }
+    }
+}
 MENU(cocktailsMenu,"Prepara Cocktail",doNothing,noEvent,wrapStyle
     ,SUBMENU(chooseCocktailMenu)
-    ,OP("Prepara",doNothing,noEvent)
+    ,OP("Prepara",prepareCocktail,enterEvent)
     ,EXIT("Indietro")
 );
 
