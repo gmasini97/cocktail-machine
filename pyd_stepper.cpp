@@ -5,6 +5,8 @@ void PYD_Stepper::begin() {
     mStepper->setDirectionPin(mPinDir, mDirectionReverse);
     mStepper->setEnablePin(mPinEn);
     mStepper->setAutoEnable(true);
+    mStepper->setSpeedInHz(mmToSteps(mSpeed));
+    mStepper->setAcceleration(mmToSteps(mAcceleration));
     pinMode(mPinEndstop, INPUT);
 }
 
@@ -16,13 +18,23 @@ FastAccelStepper* PYD_Stepper::getFastAccelStepper() {
     return mStepper;
 }
 
-void PYD_Stepper::setDynamics(int speed_in_hertz, int acceleration) {
-    mStepper->setSpeedInHz(speed_in_hertz);
-    mStepper->setAcceleration(acceleration);
-}
-
 int PYD_Stepper::readEndstop() {
     return digitalRead(mPinEndstop) ^ mEndstopActiveLow;
+}
+
+int PYD_Stepper::mmToSteps(float mm)
+{
+    return round(mm * mStepsMM);
+}
+
+bool PYD_Stepper::moveToMM(float mm, bool blocking)
+{
+    if (mm < 0)
+        return false;
+    if (mMaxTravelMM > 0 && mm > mMaxTravelMM)
+        return false;
+    mStepper->move(mmToSteps(mm),blocking);
+    return true;
 }
 
 void PYD_Stepper::home() {

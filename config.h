@@ -4,21 +4,20 @@
 // Machine Settings
 #define SERIAL_BAUD_RATE 115200
 #define BOTTLES_NUM 8
-#define STEPPER1_MAX_TRAVEL_MM 1000
 
 // Menu
 #define MENU_MAX_DEPTH 3
 
 // Preferences
 #define PREFERENCES_NAMESPACE    "cocktail"
-#define DEFAULT_BOTTLE_QUANTITY   0       // mL
-#define DEFAULT_BOTTLE_POSITION   0       // mm
-#define DEFAULT_POUR_REFILL_TIME  5000    // ms
-#define DEFAULT_POUR_DEAD_TIME    1000    // ms
-#define DEFAULT_POUR_RATE         12.0    // mL/s
-#define DEFAULT_SERVO_POUR_ANGLE  60      // degrees
-#define DEFAULT_SERVO_IDLE_ANGLE  40      // degrees
-#define DEFAULT_AUTO_SAVE         false   //
+#define DEFAULT_BOTTLE_QUANTITY   0         // mL
+#define DEFAULT_BOTTLE_POSITION   0         // mm
+#define DEFAULT_POUR_REFILL_TIME  5000      // ms
+#define DEFAULT_POUR_DEAD_TIME    1000      // ms
+#define DEFAULT_POUR_RATE         12.0      // mL/s
+#define DEFAULT_SERVO_POUR_ANGLE  60        // degrees
+#define DEFAULT_SERVO_IDLE_ANGLE  40        // degrees
+#define DEFAULT_AUTO_SAVE         false     //
 
 // I2C Display
 #define DISPLAY_PIN_SDA 21
@@ -52,9 +51,11 @@
 #define STEPPER1_PIN_ENABLE 27
 #define STEPPER1_PIN_ENDSTOP 35
 #define STEPPER1_ENDSTOP_ACTIVE_LOW 0       // 0 or 1
-#define STEPPER1_REVERSE_DIRECTION true    // true or false
-#define STEPPER1_SPEED_IN_HZ 1600
-#define STEPPER1_ACCELERATION 1000
+#define STEPPER1_REVERSE_DIRECTION true     // true or false
+#define STEPPER1_SPEED 100                  // mm/s
+#define STEPPER1_ACCELERATION 500           // mm/s^2
+#define STEPPER1_MAX_TRAVEL_MM 1000         // mm
+#define STEPPER1_STEPS_MM 80                // 1/mm
 
 // Stepper Motor 2
 #define STEPPER2_PIN_STEP 16
@@ -62,9 +63,11 @@
 #define STEPPER2_PIN_ENABLE 27
 #define STEPPER2_PIN_ENDSTOP 34
 #define STEPPER2_ENDSTOP_ACTIVE_LOW 0       // 0 or 1
-#define STEPPER2_REVERSE_DIRECTION true    // true or false
-#define STEPPER2_SPEED_IN_HZ 1600
-#define STEPPER2_ACCELERATION 1000
+#define STEPPER2_REVERSE_DIRECTION true     // true or false
+#define STEPPER2_SPEED 100                  // mm/s
+#define STEPPER2_ACCELERATION 500           // mm/s^2
+#define STEPPER2_MAX_TRAVEL_MM 1000         // mm
+#define STEPPER2_STEPS_MM 80                // 1/mm
 
 // Servo Motor Pouring
 #define SERVO1_PIN 25

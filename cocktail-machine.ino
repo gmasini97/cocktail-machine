@@ -32,7 +32,11 @@ PYD_Stepper stepperCarriage(
     STEPPER1_PIN_ENABLE,
     STEPPER1_PIN_ENDSTOP,
     STEPPER1_ENDSTOP_ACTIVE_LOW,
-    STEPPER1_REVERSE_DIRECTION
+    STEPPER1_REVERSE_DIRECTION,
+    STEPPER1_STEPS_MM,
+    STEPPER1_MAX_TRAVEL_MM,
+    STEPPER1_SPEED,
+    STEPPER1_ACCELERATION
 );
 PYD_Servo servo(SERVO1_PIN);
 
@@ -190,7 +194,6 @@ void setup() {
     // Initialize Stepper
     stepperEngine.init();
     stepperCarriage.begin();
-    stepperCarriage.setDynamics(STEPPER1_SPEED_IN_HZ, STEPPER1_ACCELERATION);
 
     // Initialize Rotary Encoder
     rotaryEncoder.begin();
