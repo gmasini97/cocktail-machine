@@ -174,6 +174,8 @@ MENU(servoCalMenu,"Cal. Servo",doNothing,noEvent,wrapStyle
     ,EXIT("Indietro")
 );
 MENU(dispenserCalMenu,"Cal. Dispenser",doNothing,noEvent,wrapStyle
+    ,FIELD(Prefs.pourFullQuantity,"FullQuantity","mL",0,100,1,0,savePreferences,exitEvent,noStyle)
+    ,FIELD(Prefs.pourFullTime,"FullTime","ms",0,10000,100,10,savePreferences,exitEvent,noStyle)
     ,FIELD(Prefs.pourRefillTime,"RefillTime","ms",0,10000,100,10,savePreferences,exitEvent,noStyle)
     ,FIELD(Prefs.pourDeadTime,"DeadTime","ms",0,10000,100,10,savePreferences,exitEvent,noStyle)
     ,FIELD(Prefs.pourRate,"PourRate","mL/s",0,100,1,0.1,savePreferences,exitEvent,noStyle)

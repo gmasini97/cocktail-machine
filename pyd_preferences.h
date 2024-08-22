@@ -11,6 +11,8 @@ class PYD_Preferences
     int16_t   bottleContent[BOTTLES_NUM];     // Number corresponding to the content of the bottle
     int16_t   bottleQuantity[BOTTLES_NUM];    // Quantity of liquid remaining in the bottle [mL]
     float     bottlePosition[BOTTLES_NUM];    // Position of the bottle along the axis [mm]
+    int16_t   pourFullQuantity;               // Quantity of liquid the dispenser can pour when full [mL]
+    int16_t   pourFullTime;                   // Time the dispenser takes to pour when full [ms]
     int16_t   pourRefillTime;                 // Time the dispenser takes to refill [ms]
     int16_t   pourDeadTime;                   // Time the dispenser takes to start pouring [ms]
     float     pourRate;                       // Rate at which the dispenser pours liquid [mL/s]
