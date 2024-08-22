@@ -7,11 +7,11 @@ void PYD_Stepper::begin() {
     if (mPinEn >= 0)
         mStepper->setEnablePin(mPinEn);
     if (mSpeed > 0)
-    mStepper->setSpeedInHz(mmToSteps(mSpeed));
+        mStepper->setSpeedInHz(mmToSteps(mSpeed));
     if (mAcceleration > 0)
-    mStepper->setAcceleration(mmToSteps(mAcceleration));
+        mStepper->setAcceleration(mmToSteps(mAcceleration));
     if (mPinEndstop >= 0)
-    pinMode(mPinEndstop, INPUT);
+        pinMode(mPinEndstop, INPUT);
 }
 
 void PYD_Stepper::end() {
@@ -44,7 +44,11 @@ bool PYD_Stepper::moveToMM(float mm, bool blocking)
 void PYD_Stepper::home() {
     if (mPinEndstop < 0)
         return;
+    if (mSpeedHoming > 0)
+        mStepper->setSpeedInHz(mmToSteps(mSpeedHoming));
     mStepper->runBackward();
     while (!readEndstop()) {}
     mStepper->forceStopAndNewPosition(0);
+    if (mSpeed > 0)
+        mStepper->setSpeedInHz(mmToSteps(mSpeed));
 }

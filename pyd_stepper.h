@@ -19,6 +19,7 @@ class PYD_Stepper {
             float stepsMM = 0,
             float maxTravelMM = 0,
             float speed = 0,
+            float speedHoming = 0,
             float acceleration = 0
         ) : mEngine(engine),
             mPinStep(pinStep),
@@ -30,6 +31,7 @@ class PYD_Stepper {
             mStepsMM(stepsMM),
             mMaxTravelMM(maxTravelMM),
             mSpeed(speed),
+            mSpeedHoming(speedHoming),
             mAcceleration(acceleration)
         {
         }
@@ -48,7 +50,7 @@ class PYD_Stepper {
         int mPinStep, mPinDir, mPinEn, mPinEndstop;
         int mEndstopActiveLow;
         bool mDirectionReverse;
-        float mStepsMM, mMaxTravelMM, mSpeed, mAcceleration;
+        float mStepsMM, mMaxTravelMM, mSpeed, mSpeedHoming, mAcceleration;
         FastAccelStepper *mStepper = NULL;
         FastAccelStepperEngine *mEngine = NULL;
 };
