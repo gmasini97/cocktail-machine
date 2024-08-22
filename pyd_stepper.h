@@ -2,7 +2,9 @@
 #define PYD_STEPPER_H
 
 #include "FastAccelStepper.h"
-#include "AVRStepperPins.h" // Only required for AVR controllers
+#ifdef __AVR_ARCH__
+    #include "AVRStepperPins.h"
+#endif
 
 class PYD_Stepper {
     public:
