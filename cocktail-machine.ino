@@ -233,6 +233,7 @@ void setup() {
     lcd.setCursor(0,0);
     lcd.print("Homing...");
     stepperCarriage.home();
+    stepperCarriage.moveToMM(10, true);
 
     // Servo Test
     lcd.setCursor(0,0);
