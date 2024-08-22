@@ -37,7 +37,7 @@ bool PYD_Stepper::moveToMM(float mm, bool blocking)
         return false;
     if (mMaxTravelMM > 0 && mm > mMaxTravelMM)
         return false;
-    mStepper->move(mmToSteps(mm),blocking);
+    mStepper->moveTo(mmToSteps(mm),blocking);
     return true;
 }
 
