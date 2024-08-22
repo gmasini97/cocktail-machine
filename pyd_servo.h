@@ -6,9 +6,11 @@
 class PYD_Servo {
   public:
     PYD_Servo(int servo_pin);
+    bool move(int pos);
     void test();
+    
   private:
-    Servo servo;
+    Servo mServo;
 };
 
 #endif
