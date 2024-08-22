@@ -12,7 +12,7 @@ class PYD_Stepper {
             FastAccelStepperEngine *engine,
             int pinStep,
             int pinDir,
-            int pinEn,
+            int pinEn = -1,
             int pinEndstop = -1,
             int endstopActiveLow = 0,
             bool directionReverse = false,
