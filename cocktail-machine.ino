@@ -158,9 +158,23 @@ MENU(bottlesCalMenu,"Cal. Bottiglie",initBottlesMenu,enterEvent,wrapStyle
     ,FIELD(bottlePosition,"Posizione","mm",0,STEPPER1_MAX_TRAVEL_MM,10,1,bottlePositionEvent,updateEvent|exitEvent,noStyle)
     ,EXIT("Indietro")
 );
+void servoPourAngleEvent(eventMask e)
+{
+    if (e == updateEvent)
+        servo.move(Prefs.servoPourAngle);
+    else if (e == exitEvent)
+        savePreferences();
+}
+void servoIdleAngleEvent(eventMask e)
+{
+    if (e == updateEvent)
+        servo.move(Prefs.servoIdleAngle);
+    else if (e == exitEvent)
+        savePreferences();
+}
 MENU(servoCalMenu,"Cal. Servo",doNothing,noEvent,wrapStyle
-    ,FIELD(Prefs.servoPourAngle,"PourAngle","deg",0,180,10,1,savePreferences,exitEvent,noStyle)
-    ,FIELD(Prefs.servoIdleAngle,"IdleAngle","deg",0,180,10,1,savePreferences,exitEvent,noStyle)
+    ,FIELD(Prefs.servoPourAngle,"PourAngle","deg",0,180,10,1,servoPourAngleEvent,updateEvent|exitEvent,noStyle)
+    ,FIELD(Prefs.servoIdleAngle,"IdleAngle","deg",0,180,10,1,servoIdleAngleEvent,updateEvent|exitEvent,noStyle)
     ,EXIT("Indietro")
 );
 MENU(dispenserCalMenu,"Cal. Dispenser",doNothing,noEvent,wrapStyle
