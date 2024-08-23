@@ -246,7 +246,11 @@ void servoIdleAngleEvent(eventMask e)
     else if (e == exitEvent)
         savePreferences();
 }
-MENU(servoCalMenu,"Cal. Servo",doNothing,noEvent,wrapStyle
+void exitServoCalMenu()
+{
+    servo.move(Prefs.servoIdleAngle);
+}
+MENU(servoCalMenu,"Cal. Servo",exitServoCalMenu,exitEvent,wrapStyle
     ,FIELD(Prefs.servoPourAngle,"PourAngle","deg",0,180,10,1,servoPourAngleEvent,updateEvent|exitEvent,noStyle)
     ,FIELD(Prefs.servoIdleAngle,"IdleAngle","deg",0,180,10,1,servoIdleAngleEvent,updateEvent|exitEvent,noStyle)
     ,EXIT("Indietro")
