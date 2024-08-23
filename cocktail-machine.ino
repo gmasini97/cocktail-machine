@@ -147,6 +147,8 @@ void prepareCocktail()
         return;
     }
     // Pour the ingredients
+    servo.move(Prefs.servoIdleAngle);
+    delay(Prefs.servoIdleTime);
     lcd.setCursor(0,0);
     lcd.print("Versando:           ");
     for (int i=0; i<cocktail->len; i++)
