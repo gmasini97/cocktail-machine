@@ -180,6 +180,8 @@ void prepareCocktail()
             servo.move(Prefs.servoIdleAngle);
             if (toPour > 0)
                 delay(Prefs.pourRefillTime);
+            else
+                delay(Prefs.servoIdleTime);
         }
     }
 }

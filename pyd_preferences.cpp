@@ -33,6 +33,7 @@ void PYD_Preferences::loadAll()
   pourRate          = mPreferences.getFloat("pourRate", DEFAULT_POUR_RATE);
   servoPourAngle    = mPreferences.getShort("servoPourAngle", DEFAULT_SERVO_POUR_ANGLE);
   servoIdleAngle    = mPreferences.getShort("servoIdleAngle", DEFAULT_SERVO_IDLE_ANGLE);
+  servoIdleTime     = mPreferences.getShort("servoIdleTime", DEFAULT_SERVO_IDLE_TIME);
 }
 
 void PYD_Preferences::saveAll()
@@ -47,4 +48,5 @@ void PYD_Preferences::saveAll()
   mPreferences.putFloat("pourRate", pourRate);
   mPreferences.putShort("servoPourAngle", servoPourAngle);
   mPreferences.putShort("servoIdleAngle", servoIdleAngle);
+  mPreferences.putShort("servoIdleTime", servoIdleTime);
 }

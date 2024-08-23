@@ -18,6 +18,7 @@ class PYD_Preferences
     float     pourRate;                       // Rate at which the dispenser pours liquid [mL/s]
     int16_t   servoPourAngle;                 // Servo position when pouring [degrees]
     int16_t   servoIdleAngle;                 // Servo position when resting [degrees]
+    int16_t   servoIdleTime;                  // Time the takes to return to idle position [ms]
     
     PYD_Preferences() {};
 

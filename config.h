@@ -19,6 +19,7 @@
 #define DEFAULT_POUR_RATE           12.0        // mL/s
 #define DEFAULT_SERVO_POUR_ANGLE    60          // degrees
 #define DEFAULT_SERVO_IDLE_ANGLE    40          // degrees
+#define DEFAULT_SERVO_IDLE_TIME     1000        // ms
 #define DEFAULT_AUTO_SAVE           false       // true or false
 
 // I2C Display
