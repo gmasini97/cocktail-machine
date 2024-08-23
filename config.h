@@ -58,7 +58,7 @@
 #define STEPPER1_SPEED 100                  // mm/s
 #define STEPPER1_SPEED_HOMING 10            // mm/s
 #define STEPPER1_ACCELERATION 500           // mm/s^2
-#define STEPPER1_MAX_TRAVEL_MM 1000         // mm
+#define STEPPER1_MAX_TRAVEL_MM 785          // mm
 #define STEPPER1_STEPS_MM 80                // 1/mm
 
 // Stepper Motor 2
