@@ -265,10 +265,22 @@ MENU(dispenserCalMenu,"Cal. Dispenser",doNothing,noEvent,wrapStyle
     ,FIELD(Prefs.pourRate,"PourRate","mL/s",0,100,1,0.1,savePreferences,exitEvent,noStyle)
     ,EXIT("Indietro")
 );
+void glassAccessPositionEvent(eventMask e)
+{
+    if (e == updateEvent)
+        stepperCarriage.moveToMM(Prefs.glassAccessPosition);
+    else if (e == exitEvent)
+        savePreferences();
+}
+MENU(glassCalMenu,"Cal. Bicchiere",doNothing,noEvent,wrapStyle
+    ,FIELD(Prefs.glassAccessPosition,"AccessPosition","mm",0,STEPPER1_MAX_TRAVEL_MM,10,1,glassAccessPositionEvent,updateEvent|exitEvent,noStyle)
+    ,EXIT("Indietro")
+);
 MENU(calibrationMenu,"Calibrazione",doNothing,noEvent,wrapStyle
     ,SUBMENU(bottlesCalMenu)
     ,SUBMENU(servoCalMenu)
     ,SUBMENU(dispenserCalMenu)
+    ,SUBMENU(glassCalMenu)
     ,EXIT("Indietro")
 );
 void restart()

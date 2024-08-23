@@ -9,18 +9,19 @@
 #define MENU_MAX_DEPTH 3
 
 // Preferences
-#define PREFERENCES_NAMESPACE       "cocktail"
-#define DEFAULT_BOTTLE_QUANTITY     0           // mL
-#define DEFAULT_BOTTLE_POSITION     0           // mm
-#define DEFAULT_POUR_FULL_QUANTITY  25          // mL
-#define DEFAULT_POUR_FULL_TIME      3000        // ms
-#define DEFAULT_POUR_REFILL_TIME    5000        // ms
-#define DEFAULT_POUR_DEAD_TIME      1000        // ms
-#define DEFAULT_POUR_RATE           12.0        // mL/s
-#define DEFAULT_SERVO_POUR_ANGLE    60          // degrees
-#define DEFAULT_SERVO_IDLE_ANGLE    40          // degrees
-#define DEFAULT_SERVO_IDLE_TIME     1000        // ms
-#define DEFAULT_AUTO_SAVE           false       // true or false
+#define PREFERENCES_NAMESPACE           "cocktail"
+#define DEFAULT_BOTTLE_QUANTITY         0           // mL
+#define DEFAULT_BOTTLE_POSITION         0           // mm
+#define DEFAULT_POUR_FULL_QUANTITY      25          // mL
+#define DEFAULT_POUR_FULL_TIME          3000        // ms
+#define DEFAULT_POUR_REFILL_TIME        5000        // ms
+#define DEFAULT_POUR_DEAD_TIME          1000        // ms
+#define DEFAULT_POUR_RATE               12.0        // mL/s
+#define DEFAULT_SERVO_POUR_ANGLE        60          // degrees
+#define DEFAULT_SERVO_IDLE_ANGLE        40          // degrees
+#define DEFAULT_SERVO_IDLE_TIME         1000        // ms
+#define DEFAULT_GLASS_ACCESS_POSITION   0           // mm
+#define DEFAULT_AUTO_SAVE               false       // true or false
 
 // I2C Display
 #define DISPLAY_PIN_SDA 21

@@ -19,6 +19,7 @@ class PYD_Preferences
     int16_t   servoPourAngle;                 // Servo position when pouring [degrees]
     int16_t   servoIdleAngle;                 // Servo position when resting [degrees]
     int16_t   servoIdleTime;                  // Time the takes to return to idle position [ms]
+    float     glassAccessPosition;            // Position of the glass access [mm]
     
     PYD_Preferences() {};
 
