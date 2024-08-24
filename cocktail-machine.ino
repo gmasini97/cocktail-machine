@@ -160,9 +160,9 @@ void prepareCocktail()
             continue;
         // Move the carriage to the bottle
         stepperCarriage.moveToMM(Prefs.bottlePosition[bottle], true);
+        lcd.setCursor(0,1);
         lcd.print("                    ");
         lcd.print(PYD_bottles[Prefs.bottleContent[bottle]]);
-        lcd.setCursor(0,1);
         // Pour the ingredient
         int toPour = cocktail->ingredients[i].quantity;
         while (toPour > 0)
