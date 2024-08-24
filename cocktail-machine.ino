@@ -283,7 +283,7 @@ void glassAccessPositionEvent(eventMask e)
         savePreferences();
 }
 MENU(glassCalMenu,"Cal. Bicchiere",doNothing,noEvent,wrapStyle
-    ,FIELD(Prefs.glassAccessPosition,"AccessPosition","mm",0,STEPPER1_MAX_TRAVEL_MM,10,1,glassAccessPositionEvent,updateEvent|exitEvent,noStyle)
+    ,FIELD(Prefs.glassAccessPosition,"Posizione","mm",0,STEPPER1_MAX_TRAVEL_MM,10,1,glassAccessPositionEvent,updateEvent|exitEvent,noStyle)
     ,EXIT("Indietro")
 );
 MENU(calibrationMenu,"Calibrazione",doNothing,noEvent,wrapStyle
