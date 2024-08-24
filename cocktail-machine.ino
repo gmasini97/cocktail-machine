@@ -326,6 +326,8 @@ void setup() {
     // Carriage Homing
     lcd.setCursor(0,0);
     lcd.print("Homing...");
+    // Move servo to safe idle position
+    servo.move(Prefs.servoIdleAngle);
     stepperCarriage.home();
     stepperCarriage.moveToMM(10, true);
 
