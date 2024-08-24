@@ -28,7 +28,7 @@ const PYD_cocktail_t cocktailVodkaLemon = {
     2,
     {
         {"Vodka",50,0},
-        {"Limonata",100,0}
+        {"Lemon Soda",100,0}
     }
 };
 const PYD_cocktail_t cocktailKamikaze = {
