@@ -186,6 +186,16 @@ void prepareCocktail()
                 delay(Prefs.servoIdleTime);
         }
     }
+    stepperCarriage.moveToMM(Prefs.glassAccessPosition, true);
+    lcd.setCursor(0,0);
+    lcd.print("Cocktail pronto!    ");
+    lcd.setCursor(0,1);
+    lcd.print(cocktail->name);
+    lcd.setCursor(0,2);
+    lcd.print("                    ");
+    lcd.setCursor(0,3);
+    lcd.print("                    ");
+    delay(2000);
 }
 MENU(cocktailsMenu,"Prepara Cocktail",doNothing,noEvent,wrapStyle
     ,SUBMENU(chooseCocktailMenu)
