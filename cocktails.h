@@ -64,6 +64,24 @@ const PYD_cocktail_t cocktailLondonMule = {
         {"Ginger Beer",125,0}
     }
 };
+const PYD_cocktail_t cocktailCubaLibre = {
+    "Cuba Libre",
+    3,
+    {
+        {"Rum",50,0},
+        {"Cola",125,0},
+        {"Succo Di Lime",10,1}
+    }
+};
+const PYD_cocktail_t cocktailNegroni = {
+    "Negroni",
+    3,
+    {
+        {"Gin",25,0},
+        {"Vermouth Rosso",25,0},
+        {"Bitter",25,0}
+    }
+};
 
 const PYD_cocktail_t* PYD_cocktails[] =
 {
@@ -72,7 +90,9 @@ const PYD_cocktail_t* PYD_cocktails[] =
     &cocktailKamikaze,
     &cocktailGinTonic,
     &cocktailGinLemon,
-    &cocktailLondonMule
+    &cocktailLondonMule,
+    &cocktailCubaLibre,
+    &cocktailNegroni
 };
 
 #endif /* COCKTAILS_H */
