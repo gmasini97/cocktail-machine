@@ -329,7 +329,8 @@ void setup() {
     // Move servo to safe idle position
     servo.move(Prefs.servoIdleAngle);
     stepperCarriage.home();
-    stepperCarriage.moveToMM(10, true);
+    // Move carriage to the glass access position
+    stepperCarriage.moveToMM(Prefs.glassAccessPosition, true);
 
     // Servo Test
     lcd.setCursor(0,0);
