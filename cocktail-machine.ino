@@ -19,27 +19,9 @@
 #include "config.h"
 #include "pyd_preferences.h"
 #include "pyd_menu.h"
-#include "pyd_stepper.h"
-#include "pyd_servo.h"
+#include "pyd_machine.h"
 #include "bottles.h"
 #include "cocktails.h"
-
-FastAccelStepperEngine stepperEngine;
-PYD_Stepper stepperCarriage(
-    &stepperEngine,
-    STEPPER1_PIN_STEP,
-    STEPPER1_PIN_DIRECTION,
-    STEPPER1_PIN_ENABLE,
-    STEPPER1_PIN_ENDSTOP,
-    STEPPER1_ENDSTOP_ACTIVE_LOW,
-    STEPPER1_REVERSE_DIRECTION,
-    STEPPER1_STEPS_MM,
-    STEPPER1_MAX_TRAVEL_MM,
-    STEPPER1_SPEED,
-    STEPPER1_SPEED_HOMING,
-    STEPPER1_ACCELERATION
-);
-PYD_Servo servo(SERVO1_PIN);
 
 // Menu Inputs
 PYD_RotaryEncoder rotaryEncoder(ENCODER_PIN_A, ENCODER_PIN_B, ENCODER_PIN_BUTTON);
@@ -48,42 +30,21 @@ MENU_INPUTS(in, &rotaryEncoder.rotaryEventIn, &rotaryEncoder.keyIn);
 LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);
 MENU_OUTPUTS(out,MENU_MAX_DEPTH,LCD_OUT(lcd,{0,0,DISPLAY_COLS,DISPLAY_ROWS}),NONE);
 
-// Menus
+/* Menu Variables */
+int cocktailNumber = -1;
 int bottleNumber = 1;
 int16_t bottleContent = 0;
 float bottleQuantity = 0;
 float bottlePosition = 0;
-result initBottlesMenu()
-{
-    bottleNumber = 1;
-    updateVariables();
-    return proceed;
-}
-result updateVariables()
-{
-    bottleContent = Prefs.bottleContent[bottleNumber];
-    bottleQuantity = Prefs.bottleQuantity[bottleNumber];
-    bottlePosition = Prefs.bottlePosition[bottleNumber];
-    return proceed;
-}
-result updatePreferences()
-{
-    Prefs.bottleContent[bottleNumber] = bottleContent;
-    Prefs.bottleQuantity[bottleNumber] = bottleQuantity;
-    Prefs.bottlePosition[bottleNumber] = bottlePosition;
-    savePreferences();
-    return proceed;
-}
-result savePreferences()
-{
-    Prefs.saveAll();
-    return proceed;
-}
 
-int cocktailNumber = -1;
 const int PYD_cocktails_N = sizeof(PYD_cocktails)/sizeof(*PYD_cocktails);
+const int PYD_bottles_N = sizeof(PYD_bottles)/sizeof(*PYD_bottles);
+
 Menu::menuValue<typeof(cocktailNumber)>* menuValue_cocktails[PYD_cocktails_N+1];
+Menu::menuValue<typeof(bottleContent)>* menuValue_data[PYD_bottles_N];
 Menu::prompt* chooseCocktailMenu_data[PYD_cocktails_N+1];
+
+/* Menu Actions */
 void populateCocktailsMenu()
 {
     menuValue_cocktails[0] = new Menu::menuValue<typeof(cocktailNumber)>("Seleziona Cocktail", -1);
@@ -95,117 +56,6 @@ void populateCocktailsMenu()
         chooseCocktailMenu_data[i+1] = menuValue_cocktails[i+1];
     }
 }
-const char chooseCocktailMenu_text[] ="";
-Menu::menuVariantShadows<typeof(cocktailNumber)> chooseCocktailMenuShadows={
-    (Menu::callback)doNothing,
-    ((systemStyles)(Menu::_menuData|Menu::_canNav|Menu::_isVariant)),
-    chooseCocktailMenu_text,
-    noEvent,
-    noStyle,
-    sizeof(chooseCocktailMenu_data)/sizeof(prompt*),
-    chooseCocktailMenu_data,
-    &cocktailNumber
-};
-Menu::choose<typeof(cocktailNumber)> chooseCocktailMenu (chooseCocktailMenuShadows.obj);
-
-// Returns the index of the bottle in the Prefs.bottleContent array
-// that contains the ingredient with the given name and quantity
-// Returns -1 if the ingredient is not available
-// Returns -2 if the ingredient is not available but optional
-int bottleAvailable(const PYD_ingredient_t* ingredient)
-{
-    int bottle = bottleAvailable(ingredient->name, ingredient->quantity);
-    if (bottle == -1 && ingredient->optional)
-        return -2;
-    return bottle;
-}
-// Returns the index of the bottle in the Prefs.bottleContent array
-// that contains the ingredient with the given name and quantity
-// Returns -1 if the ingredient is not available
-int bottleAvailable(const char *name, int quantity)
-{
-    int n = sizeof(Prefs.bottleContent)/sizeof(*Prefs.bottleContent);
-    for (int i=0; i<n; i++)
-        if (strcmp(name, PYD_bottles[Prefs.bottleContent[i]]) == 0)
-            if (Prefs.bottleQuantity[i] >= quantity)
-                return i;
-    return -1;
-}
-void prepareCocktail()
-{
-    const PYD_cocktail_t* cocktail = PYD_cocktails[cocktailNumber];
-    // Check if cocktail ingredients are available
-    bool ingredientsAvailable = true;
-    for (int i=0; i<cocktail->len; i++)
-        if (bottleAvailable(&cocktail->ingredients[i]) == -1)
-            ingredientsAvailable = false;
-    if (!ingredientsAvailable)
-    {
-        lcd.setCursor(0,0);
-        lcd.print("Ingredienti mancanti");
-        delay(2000);
-        return;
-    }
-    // Pour the ingredients
-    servo.move(Prefs.servoIdleAngle);
-    delay(Prefs.servoIdleTime);
-    lcd.setCursor(0,0);
-    lcd.print("Versando:           ");
-    for (int i=0; i<cocktail->len; i++)
-    {
-        int bottle = bottleAvailable(&cocktail->ingredients[i]);
-        if (bottle == -1)
-            continue;
-        if (bottle == -2)
-            continue;
-        // Move the carriage to the bottle
-        stepperCarriage.moveToMM(Prefs.bottlePosition[bottle], true);
-        lcd.setCursor(0,1);
-        lcd.print("                    ");
-        lcd.print(PYD_bottles[Prefs.bottleContent[bottle]]);
-        // Pour the ingredient
-        int toPour = cocktail->ingredients[i].quantity;
-        while (toPour > 0)
-        {
-            if (toPour >= Prefs.pourFullQuantity)
-            {
-                servo.move(Prefs.servoPourAngle);
-                delay(Prefs.pourFullTime);
-                toPour -= Prefs.pourFullQuantity;
-            }
-            else
-            {
-                servo.move(Prefs.servoPourAngle);
-                delay(round((float)(1000*toPour)/Prefs.pourRate) + Prefs.pourDeadTime);
-                toPour = 0;
-            }
-            servo.move(Prefs.servoIdleAngle);
-            if (toPour > 0)
-                delay(Prefs.pourRefillTime);
-            else
-                delay(Prefs.servoIdleTime);
-        }
-    }
-    stepperCarriage.moveToMM(Prefs.glassAccessPosition, true);
-    lcd.setCursor(0,0);
-    lcd.print("Cocktail pronto!    ");
-    lcd.setCursor(0,1);
-    lcd.print(cocktail->name);
-    lcd.setCursor(0,2);
-    lcd.print("                    ");
-    lcd.setCursor(0,3);
-    lcd.print("                    ");
-    delay(2000);
-}
-MENU(cocktailsMenu,"Prepara Cocktail",doNothing,noEvent,wrapStyle
-    ,SUBMENU(chooseCocktailMenu)
-    ,OP("Prepara",prepareCocktail,enterEvent)
-    ,EXIT("Indietro")
-);
-
-const int PYD_bottles_N = sizeof(PYD_bottles)/sizeof(*PYD_bottles);
-Menu::menuValue<typeof(bottleContent)>* menuValue_data[PYD_bottles_N];
-Menu::prompt* bottleContentMenu_data[PYD_bottles_N];
 void populateBottleContentMenu()
 {
     for (int i=0; i<PYD_bottles_N; i++)
@@ -214,95 +64,196 @@ void populateBottleContentMenu()
         bottleContentMenu_data[i] = menuValue_data[i];
     }
 }
-const char bottleContentMenu_text[] = "";
-Menu::menuVariantShadows<typeof(bottleContent)> bottleContentMenuShadows = {
+// Return the index of the bottle containing the ingredient, -1 if not found, -2 if not found and optional
+int isIngredientAvailable(const PYD_ingredient_t* ingredient)
+{
+    int n = sizeof(Prefs.bottleContent)/sizeof(*Prefs.bottleContent);
+    for (int i=0; i<n; i++)
+        if (strcmp(ingredient->name, PYD_bottles[Prefs.bottleContent[i]]) == 0)
+            if (Prefs.bottleQuantity[i] >= ingredient->quantity)
+                return i;
+    if (ingredient->optional)
+        return -2;
+    return -1;
+}
+void onPrepareCocktailEnter()
+{
+    const PYD_cocktail_t* cocktail = PYD_cocktails[cocktailNumber];
+    // Check if cocktail ingredients are available
+    bool ingredientsAvailable = true;
+    for (int i=0; i<cocktail->len; i++)
+        if (isIngredientAvailable(&cocktail->ingredients[i]) == -1)
+            ingredientsAvailable = false;
+    if (!ingredientsAvailable)
+    {
+        lcd.clear();
+        lcd.print("Ingredienti mancanti");
+        delay(2000);
+        return;
+    }
+    for (int i=0; i<cocktail->len; i++)
+    {
+        int bottle = isIngredientAvailable(&cocktail->ingredients[i]);
+        if (bottle < 0)
+            continue;
+        lcd.clear();
+        lcd.print("Versando:");
+        lcd.setCursor(0,1);
+        lcd.print(PYD_bottles[Prefs.bottleContent[bottle]]);
+        Machine.moveAxis(Prefs.bottlePosition[bottle], true);
+        int toPour = cocktail->ingredients[i].quantity;
+        while (toPour > 0)
+        {
+            if (toPour >= Prefs.pourFullQuantity)
+            {
+                Machine.moveServo(Prefs.servoPourAngle, false);
+                delay(Prefs.pourFullTime);
+                toPour -= Prefs.pourFullQuantity;
+            }
+            else
+            {
+                Machine.moveServo(Prefs.servoPourAngle, false);
+                delay(round((float)(1000*toPour)/Prefs.pourRate) + Prefs.pourDeadTime);
+                toPour = 0;
+            }
+            Machine.moveServo(Prefs.servoIdleAngle, false);
+            if (toPour > 0)
+                delay(Prefs.pourRefillTime);
+            else
+                delay(Prefs.servoIdleTime);
+        }
+        Prefs.bottleQuantity[bottle] -= cocktail->ingredients[i].quantity;
+    }
+    Prefs.saveAll();
+    Machine.moveAxis(Prefs.glassAccessPosition, true);
+    lcd.clear();
+    lcd.print("Cocktail pronto!");
+    lcd.setCursor(0,1);
+    lcd.print(cocktail->name);
+    delay(2000);
+}
+void onBottleMenuEnter()
+{
+    bottleNumber = 1;
+    onBottleNumberUpdate();
+}
+void onBottleNumberUpdate()
+{
+    bottleContent = Prefs.bottleContent[bottleNumber];
+    bottleQuantity = Prefs.bottleQuantity[bottleNumber];
+    bottlePosition = Prefs.bottlePosition[bottleNumber];
+    Machine.moveAxis(bottlePosition, false);
+}
+void onBottleContentUpdate()
+{
+    Prefs.bottleContent[bottleNumber] = bottleContent;
+}
+void onBottleQuantityUpdate()
+{
+    Prefs.bottleQuantity[bottleNumber] = bottleQuantity;
+}
+void onBottlePositionUpdate()
+{
+    Prefs.bottlePosition[bottleNumber] = bottlePosition;
+    Machine.moveAxis(bottlePosition, false);
+}
+void onServoCalMenuExit()
+{
+    Machine.moveServo(Prefs.servoIdleAngle, false);
+}
+void onServoPourAngleUpdate()
+{
+    Machine.moveServo(Prefs.servoPourAngle, false);
+}
+void onServoIdleAngleUpdate()
+{
+    Machine.moveServo(Prefs.servoIdleAngle, false);
+}
+void onGlassAccessPositionUpdate()
+{
+    Machine.moveAxis(Prefs.glassAccessPosition, false);
+}
+void onCalibrationMenuExit()
+{
+    Machine.moveServo(Prefs.servoIdleAngle, false);
+    Machine.moveAxis(Prefs.glassAccessPosition, false);
+    Prefs.saveAll();
+}
+void onRestartMenuEnter()
+{
+    Machine.moveAxis(10, true);
+    ESP.restart();
+}
+
+/* Menu Definition */
+Menu::menuVariantShadows<typeof(cocktailNumber)> chooseCocktailMenuShadows={
     (Menu::callback)doNothing,
-    ((systemStyles)(Menu::_menuData|Menu::_canNav|Menu::_isVariant|Menu::_parentDraw)),
-    bottleContentMenu_text,
+    ((systemStyles)(Menu::_menuData|Menu::_canNav|Menu::_isVariant)),
+    "",
     noEvent,
+    noStyle,
+    sizeof(chooseCocktailMenu_data)/sizeof(prompt*),
+    chooseCocktailMenu_data,
+    &cocktailNumber
+};
+Menu::choose<typeof(cocktailNumber)> chooseCocktailMenu(chooseCocktailMenuShadows.obj);
+MENU(cocktailsMenu,"Prepara Cocktail",doNothing,noEvent,wrapStyle
+    ,SUBMENU(chooseCocktailMenu)
+    ,OP("Prepara",onPrepareCocktailEnter,enterEvent)
+    ,EXIT("Indietro")
+);
+Menu::prompt* bottleContentMenu_data[PYD_bottles_N];
+Menu::menuVariantShadows<typeof(bottleContent)> bottleContentMenuShadows = {
+    (Menu::callback) onBottleContentUpdate,
+    ((systemStyles) (Menu::_menuData|Menu::_canNav|Menu::_isVariant|Menu::_parentDraw)),
+    "",
+    updateEvent,
     noStyle,
     sizeof(bottleContentMenu_data)/sizeof(prompt*),
     bottleContentMenu_data,
     &bottleContent
 };
-Menu::select<typeof(bottleContent)> bottleContentMenu (bottleContentMenuShadows.obj);
-MENU(bottlesMenu,"Bottiglie",initBottlesMenu,enterEvent,wrapStyle
-    ,FIELD(bottleNumber,"Bottiglia","",1,BOTTLES_NUM,1,0,updateVariables,updateEvent,noStyle)
+Menu::select<typeof(bottleContent)> bottleContentMenu(bottleContentMenuShadows.obj);
+MENU(bottlesMenu,"Bottiglie",onBottleMenuEnter,enterEvent,wrapStyle
+    ,FIELD(bottleNumber,"Bottiglia","",1,BOTTLES_NUM,1,0,onBottleNumberUpdate,updateEvent,noStyle)
     ,SUBMENU(bottleContentMenu)
-    ,FIELD(bottleQuantity,"Volume","mL",0,2000,100,10,updatePreferences,exitEvent,noStyle)
+    ,FIELD(bottleQuantity,"Volume","mL",0,2000,100,10,onBottleQuantityUpdate,updateEvent,noStyle)
     ,EXIT("Indietro")
 );
-void bottlePositionEvent(eventMask e)
-{
-    if (e == updateEvent)
-        stepperCarriage.moveToMM(bottlePosition);
-    else if (e == exitEvent)
-        updatePreferences();
-}
-MENU(bottlesCalMenu,"Cal. Bottiglie",initBottlesMenu,enterEvent,wrapStyle
-    ,FIELD(bottleNumber,"Bottiglia","",1,BOTTLES_NUM,1,0,updateVariables,updateEvent,noStyle)
-    ,FIELD(bottlePosition,"Posizione","mm",0,STEPPER1_MAX_TRAVEL_MM,10,1,bottlePositionEvent,updateEvent|exitEvent,noStyle)
+MENU(bottlesCalMenu,"Cal. Bottiglie",onBottleMenuEnter,enterEvent,wrapStyle
+    ,FIELD(bottleNumber,"Bottiglia","",1,BOTTLES_NUM,1,0,onBottleNumberUpdate,updateEvent,noStyle)
+    ,FIELD(bottlePosition,"Posizione","mm",0,STEPPER1_MAX_TRAVEL_MM,10,1,onBottlePositionUpdate,updateEvent,noStyle)
     ,EXIT("Indietro")
 );
-void servoPourAngleEvent(eventMask e)
-{
-    if (e == updateEvent)
-        servo.move(Prefs.servoPourAngle);
-    else if (e == exitEvent)
-        savePreferences();
-}
-void servoIdleAngleEvent(eventMask e)
-{
-    if (e == updateEvent)
-        servo.move(Prefs.servoIdleAngle);
-    else if (e == exitEvent)
-        savePreferences();
-}
-void exitServoCalMenu()
-{
-    servo.move(Prefs.servoIdleAngle);
-}
-MENU(servoCalMenu,"Cal. Servo",exitServoCalMenu,exitEvent,wrapStyle
-    ,FIELD(Prefs.servoPourAngle,"PourAngle","deg",0,180,10,1,servoPourAngleEvent,updateEvent|exitEvent,noStyle)
-    ,FIELD(Prefs.servoIdleAngle,"IdleAngle","deg",0,180,10,1,servoIdleAngleEvent,updateEvent|exitEvent,noStyle)
+MENU(servoCalMenu,"Cal. Servo",onServoCalMenuExit,exitEvent,wrapStyle
+    ,FIELD(Prefs.servoPourAngle,"PourAngle","deg",0,180,10,1,onServoPourAngleUpdate,updateEvent,noStyle)
+    ,FIELD(Prefs.servoIdleAngle,"IdleAngle","deg",0,180,10,1,onServoIdleAngleUpdate,updateEvent,noStyle)
     ,EXIT("Indietro")
 );
 MENU(dispenserCalMenu,"Cal. Dispenser",doNothing,noEvent,wrapStyle
-    ,FIELD(Prefs.pourFullQuantity,"FullQuantity","mL",0,100,1,0,savePreferences,exitEvent,noStyle)
-    ,FIELD(Prefs.pourFullTime,"FullTime","ms",0,10000,100,10,savePreferences,exitEvent,noStyle)
-    ,FIELD(Prefs.pourRefillTime,"RefillTime","ms",0,10000,100,10,savePreferences,exitEvent,noStyle)
-    ,FIELD(Prefs.pourDeadTime,"DeadTime","ms",0,10000,100,10,savePreferences,exitEvent,noStyle)
-    ,FIELD(Prefs.pourRate,"PourRate","mL/s",0,100,1,0.1,savePreferences,exitEvent,noStyle)
+    ,FIELD(Prefs.pourFullQuantity,"FullQuantity","mL",0,100,1,0,doNothing,noEvent,noStyle)
+    ,FIELD(Prefs.pourFullTime,"FullTime","ms",0,10000,100,10,doNothing,noEvent,noStyle)
+    ,FIELD(Prefs.pourRefillTime,"RefillTime","ms",0,10000,100,10,doNothing,noEvent,noStyle)
+    ,FIELD(Prefs.pourDeadTime,"DeadTime","ms",0,10000,100,10,doNothing,noEvent,noStyle)
+    ,FIELD(Prefs.pourRate,"PourRate","mL/s",0,100,1,0.1,doNothing,noEvent,noStyle)
     ,EXIT("Indietro")
 );
-void glassAccessPositionEvent(eventMask e)
-{
-    if (e == updateEvent)
-        stepperCarriage.moveToMM(Prefs.glassAccessPosition);
-    else if (e == exitEvent)
-        savePreferences();
-}
 MENU(glassCalMenu,"Cal. Bicchiere",doNothing,noEvent,wrapStyle
-    ,FIELD(Prefs.glassAccessPosition,"Posizione","mm",0,STEPPER1_MAX_TRAVEL_MM,10,1,glassAccessPositionEvent,updateEvent|exitEvent,noStyle)
+    ,FIELD(Prefs.glassAccessPosition,"Posizione","mm",0,STEPPER1_MAX_TRAVEL_MM,10,1,onGlassAccessPositionUpdate,updateEvent,noStyle)
     ,EXIT("Indietro")
 );
-MENU(calibrationMenu,"Calibrazione",doNothing,noEvent,wrapStyle
+MENU(calibrationMenu,"Calibrazione",onCalibrationMenuExit,exitEvent,wrapStyle
     ,SUBMENU(bottlesCalMenu)
     ,SUBMENU(servoCalMenu)
     ,SUBMENU(dispenserCalMenu)
     ,SUBMENU(glassCalMenu)
     ,EXIT("Indietro")
 );
-void restart()
-{
-    stepperCarriage.moveToMM(10, true);
-    ESP.restart();
-}
 MENU(mainMenu,"Main menu",doNothing,noEvent,wrapStyle
     ,SUBMENU(cocktailsMenu)
     ,SUBMENU(bottlesMenu)
     ,SUBMENU(calibrationMenu)
-    ,OP("Riavvia",restart,enterEvent)
+    ,OP("Riavvia",onRestartMenuEnter,enterEvent)
 );
 NAVROOT(nav, mainMenu, MENU_MAX_DEPTH, in, out);
 
@@ -318,10 +269,6 @@ void setup() {
         exit(-1);
     }
 
-    // Initialize Stepper
-    stepperEngine.init();
-    stepperCarriage.begin();
-
     // Initialize Rotary Encoder
     rotaryEncoder.begin();
 
@@ -334,22 +281,18 @@ void setup() {
     nav.showTitle=false;
     nav.useUpdateEvent=true;
 
-    // Carriage Homing
+    // Initialize Machine
+    Machine.begin();
+
+    // Homing
     lcd.setCursor(0,0);
     lcd.print("Homing...");
-    // Move servo to safe idle position
-    servo.move(Prefs.servoIdleAngle);
-    stepperCarriage.home();
-    // Move carriage to the glass access position
-    stepperCarriage.moveToMM(Prefs.glassAccessPosition, true);
+    Machine.home();
 
     // Servo Test
     lcd.setCursor(0,0);
     lcd.print("Servo Test...");
-    servo.move(Prefs.servoPourAngle);
-    delay(2000);
-    servo.move(Prefs.servoIdleAngle);
-    delay(2000);
+    Machine.servoTest();
 }
 
 void loop() {
