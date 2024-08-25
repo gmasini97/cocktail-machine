@@ -5,11 +5,16 @@
 
 class PYD_Servo {
   public:
-    PYD_Servo(int servo_pin);
+        PYD_Servo(int servoPin) : mServoPin(servoPin) {};
+
+        void begin();
+        void end();
+
     bool move(int pos);
     void test();
     
   private:
+        int mServoPin;
     Servo mServo;
 };
 

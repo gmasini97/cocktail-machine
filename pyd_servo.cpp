@@ -1,8 +1,12 @@
 #include "pyd_servo.h"
 
-PYD_Servo::PYD_Servo(int servo_pin) {
-  mServo.attach(servo_pin);
+void PYD_Servo::begin() {
+  mServo.attach(mServoPin);
   mServo.setPeriodHertz(50);
+}
+
+void PYD_Servo::end() {
+  mServo.detach();
 }
 
 bool PYD_Servo::move(int pos) {
