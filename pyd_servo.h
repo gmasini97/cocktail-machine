@@ -11,7 +11,7 @@ class PYD_Servo {
         void end();
 
     bool move(int pos);
-    void test();
+        int position();
     
   private:
         int mServoPin;

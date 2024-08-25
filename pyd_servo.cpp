@@ -16,14 +16,6 @@ bool PYD_Servo::move(int pos) {
   return true;
 }
 
-void PYD_Servo::test() {
-  int pos;
-  for (pos = 40; pos <= 60; pos += 1) {
-    mServo.write(pos);
-    delay(60);
-  }
-  for (pos = 60; pos >= 40; pos -= 1) {
-    mServo.write(pos);
-    delay(60);
-  }
+int PYD_Servo::position() {
+  return mServo.read();
 }
