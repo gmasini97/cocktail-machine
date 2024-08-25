@@ -41,8 +41,9 @@ const int PYD_cocktails_N = sizeof(PYD_cocktails)/sizeof(*PYD_cocktails);
 const int PYD_bottles_N = sizeof(PYD_bottles)/sizeof(*PYD_bottles);
 
 Menu::menuValue<typeof(cocktailNumber)>* menuValue_cocktails[PYD_cocktails_N+1];
-Menu::menuValue<typeof(bottleContent)>* menuValue_data[PYD_bottles_N];
+Menu::menuValue<typeof(bottleContent)>* menuValue_bottles[PYD_bottles_N];
 Menu::prompt* chooseCocktailMenu_data[PYD_cocktails_N+1];
+Menu::prompt* bottleContentMenu_data[PYD_bottles_N];
 
 /* Menu Actions */
 void populateCocktailsMenu()
@@ -60,8 +61,8 @@ void populateBottleContentMenu()
 {
     for (int i=0; i<PYD_bottles_N; i++)
     {
-        menuValue_data[i] = new Menu::menuValue<typeof(bottleContent)>(PYD_bottles[i], i);
-        bottleContentMenu_data[i] = menuValue_data[i];
+        menuValue_bottles[i] = new Menu::menuValue<typeof(bottleContent)>(PYD_bottles[i], i);
+        bottleContentMenu_data[i] = menuValue_bottles[i];
     }
 }
 // Return the index of the bottle containing the ingredient, -1 if not found, -2 if not found and optional
@@ -76,7 +77,7 @@ int isIngredientAvailable(const PYD_ingredient_t* ingredient)
         return -2;
     return -1;
 }
-void onPrepareCocktailEnter()
+result onPrepareCocktailEnter()
 {
     const PYD_cocktail_t* cocktail = PYD_cocktails[cocktailNumber];
     // Check if cocktail ingredients are available
@@ -89,7 +90,7 @@ void onPrepareCocktailEnter()
         lcd.clear();
         lcd.print("Ingredienti mancanti");
         delay(2000);
-        return;
+        return proceed;
     }
     for (int i=0; i<cocktail->len; i++)
     {
@@ -131,11 +132,13 @@ void onPrepareCocktailEnter()
     lcd.setCursor(0,1);
     lcd.print(cocktail->name);
     delay(2000);
+    return proceed;
 }
-void onBottleMenuEnter()
+result onBottleMenuEnter()
 {
     bottleNumber = 1;
     onBottleNumberUpdate();
+    return proceed;
 }
 void onBottleNumberUpdate()
 {
@@ -144,7 +147,7 @@ void onBottleNumberUpdate()
     bottlePosition = Prefs.bottlePosition[bottleNumber];
     Machine.moveAxis(bottlePosition, false);
 }
-void onBottleContentUpdate()
+void onBottleContentExit()
 {
     Prefs.bottleContent[bottleNumber] = bottleContent;
 }
@@ -179,16 +182,17 @@ void onCalibrationMenuExit()
     Machine.moveAxis(Prefs.glassAccessPosition, false);
     Prefs.saveAll();
 }
-void onRestartMenuEnter()
+result onRestartMenuEnter()
 {
     Machine.moveAxis(10, true);
     ESP.restart();
+    return proceed;
 }
 
 /* Menu Definition */
 Menu::menuVariantShadows<typeof(cocktailNumber)> chooseCocktailMenuShadows={
-    (Menu::callback)doNothing,
-    ((systemStyles)(Menu::_menuData|Menu::_canNav|Menu::_isVariant)),
+    (Menu::callback) doNothing,
+    ((systemStyles) (Menu::_menuData|Menu::_canNav|Menu::_isVariant)),
     "",
     noEvent,
     noStyle,
@@ -202,12 +206,11 @@ MENU(cocktailsMenu,"Prepara Cocktail",doNothing,noEvent,wrapStyle
     ,OP("Prepara",onPrepareCocktailEnter,enterEvent)
     ,EXIT("Indietro")
 );
-Menu::prompt* bottleContentMenu_data[PYD_bottles_N];
 Menu::menuVariantShadows<typeof(bottleContent)> bottleContentMenuShadows = {
-    (Menu::callback) onBottleContentUpdate,
+    (Menu::callback) onBottleContentExit,
     ((systemStyles) (Menu::_menuData|Menu::_canNav|Menu::_isVariant|Menu::_parentDraw)),
     "",
-    updateEvent,
+    exitEvent,
     noStyle,
     sizeof(bottleContentMenu_data)/sizeof(prompt*),
     bottleContentMenu_data,
