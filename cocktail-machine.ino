@@ -295,6 +295,7 @@ MENU(calibrationMenu,"Calibrazione",doNothing,noEvent,wrapStyle
 );
 void restart()
 {
+    stepperCarriage.moveToMM(10, true);
     ESP.restart();
 }
 MENU(mainMenu,"Main menu",doNothing,noEvent,wrapStyle
