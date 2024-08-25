@@ -4,18 +4,18 @@
 #include <ESP32Servo.h>
 
 class PYD_Servo {
-  public:
+    public:
         PYD_Servo(int servoPin) : mServoPin(servoPin) {};
 
         void begin();
         void end();
 
-    bool move(int pos);
+        bool move(int pos);
         int position();
-    
-  private:
+        
+    private:
         int mServoPin;
-    Servo mServo;
+        Servo mServo;
 };
 
 #endif
