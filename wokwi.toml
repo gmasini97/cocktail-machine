@@ -2,4 +2,3 @@
 version = 1
 firmware = 'build/cocktail-machine.ino.bin'
 elf = 'build/cocktail-machine.ino.elf'
-gdbServerPort=3333
