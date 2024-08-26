@@ -65,7 +65,9 @@ void populateCocktailsMenu()
     chooseCocktailMenu_data[0] = menuValue_cocktails[0];
     for (int i=0; i<PYD_cocktails_N; i++)
     {
-        // TODO: check if cocktail ingredients are available on the machine
+        for (int j=0; j<PYD_cocktails[i]->len; j++)
+            if (isIngredientAvailable(&PYD_cocktails[i]->ingredients[j]) == -1)
+                continue;
         menuValue_cocktails[i+1] = new Menu::menuValue<typeof(cocktailNumber)>(PYD_cocktails[i]->name, i);
         chooseCocktailMenu_data[i+1] = menuValue_cocktails[i+1];
     }
