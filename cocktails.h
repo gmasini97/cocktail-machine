@@ -17,6 +17,15 @@ struct PYD_cocktail_t
     PYD_ingredient_t ingredients[];
 };
 
+const PYD_cocktail_t cocktailAmericano = {
+    "Americano",
+    3,
+    {
+        {"Campari",30,0},
+        {"Vermouth",30,0},
+        {"Soda",10,1}
+    }
+};
 const PYD_cocktail_t cocktailAperolSpritz = {
     "Aperol Spritz",
     3,
@@ -313,6 +322,7 @@ const PYD_cocktail_t cocktailWhiteLady = {
 
 const PYD_cocktail_t* PYD_cocktails[] =
 {
+    &cocktailAmericano,
     &cocktailAperolSpritz,
     &cocktailBellini,
     &cocktailBlackRussian,
