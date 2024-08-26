@@ -46,7 +46,6 @@ Menu::prompt* chooseCocktailMenu_data[PYD_cocktails_N+1];
 Menu::prompt* bottleContentMenu_data[PYD_bottles_N];
 
 /* Menu Actions */
-
 // Return the index of the bottle containing the ingredient, -1 if not found, -2 if not found and optional
 int isIngredientAvailable(const PYD_ingredient_t* ingredient)
 {
@@ -59,19 +58,23 @@ int isIngredientAvailable(const PYD_ingredient_t* ingredient)
         return -2;
     return -1;
 }
+bool areIngredientsAvailable(const PYD_cocktail_t* cocktail)
+{
+    for (int i=0; i<cocktail->len; i++)
+        if (isIngredientAvailable(&cocktail->ingredients[i]) == -1)
+            return false;
+    return true;
+}
 void populateCocktailsMenu()
 {
     menuValue_cocktails[0] = new Menu::menuValue<typeof(cocktailNumber)>("Seleziona Cocktail", -1);
     chooseCocktailMenu_data[0] = menuValue_cocktails[0];
     for (int i=0; i<PYD_cocktails_N; i++)
     {
-        bool ingredientsAvailable = true;
-        for (int j=0; j<PYD_cocktails[i]->len; j++)
-            if (isIngredientAvailable(&PYD_cocktails[i]->ingredients[j]) == -1)
-                ingredientsAvailable = false;
-        if (!ingredientsAvailable)
-                continue;
-        menuValue_cocktails[i+1] = new Menu::menuValue<typeof(cocktailNumber)>(PYD_cocktails[i]->name, i);
+        const PYD_cocktail_t* cocktail = PYD_cocktails[i];
+        Serial.print(cocktail->name);
+        Serial.println(areIngredientsAvailable(cocktail) ? " (disponibile)" : " (mancante)");
+        menuValue_cocktails[i+1] = new Menu::menuValue<typeof(cocktailNumber)>(cocktail->name, i);
         chooseCocktailMenu_data[i+1] = menuValue_cocktails[i+1];
     }
 }
@@ -88,12 +91,7 @@ result onPrepareCocktailEnter()
     if (cocktailNumber < 0)
         return proceed;
     const PYD_cocktail_t* cocktail = PYD_cocktails[cocktailNumber];
-    // Check if cocktail ingredients are available
-    bool ingredientsAvailable = true;
-    for (int i=0; i<cocktail->len; i++)
-        if (isIngredientAvailable(&cocktail->ingredients[i]) == -1)
-            ingredientsAvailable = false;
-    if (!ingredientsAvailable)
+    if (!areIngredientsAvailable(cocktail))
     {
         lcd.clear();
         lcd.print("Ingredienti mancanti");
@@ -294,6 +292,10 @@ void setup() {
         Serial.println("Cannot load preferences.");
         exit(-1);
     }
+    Prefs.bottleContent[0] = 11;
+    Prefs.bottleQuantity[0] = 1000;
+    Prefs.bottleContent[1] = 40;
+    Prefs.bottleQuantity[1] = 1000;
 
     // Initialize Rotary Encoder
     rotaryEncoder.begin();
