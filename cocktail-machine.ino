@@ -163,22 +163,22 @@ result onBottlesMenuExit()
 }
 void onBottleNumberUpdate()
 {
-    bottleContent = Prefs.bottleContent[bottleNumber];
-    bottleQuantity = Prefs.bottleQuantity[bottleNumber];
-    bottlePosition = Prefs.bottlePosition[bottleNumber];
+    bottleContent = Prefs.bottleContent[bottleNumber-1];
+    bottleQuantity = Prefs.bottleQuantity[bottleNumber-1];
+    bottlePosition = Prefs.bottlePosition[bottleNumber-1];
     Machine.moveAxis(bottlePosition, false);
 }
 void onBottleContentExit()
 {
-    Prefs.bottleContent[bottleNumber] = bottleContent;
+    Prefs.bottleContent[bottleNumber-1] = bottleContent;
 }
 void onBottleQuantityUpdate()
 {
-    Prefs.bottleQuantity[bottleNumber] = bottleQuantity;
+    Prefs.bottleQuantity[bottleNumber-1] = bottleQuantity;
 }
 void onBottlePositionUpdate()
 {
-    Prefs.bottlePosition[bottleNumber] = bottlePosition;
+    Prefs.bottlePosition[bottleNumber-1] = bottlePosition;
     Machine.moveAxis(bottlePosition, false);
 }
 void onServoCalMenuExit()
