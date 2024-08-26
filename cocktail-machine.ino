@@ -46,6 +46,19 @@ Menu::prompt* chooseCocktailMenu_data[PYD_cocktails_N+1];
 Menu::prompt* bottleContentMenu_data[PYD_bottles_N];
 
 /* Menu Actions */
+
+// Return the index of the bottle containing the ingredient, -1 if not found, -2 if not found and optional
+int isIngredientAvailable(const PYD_ingredient_t* ingredient)
+{
+    int n = sizeof(Prefs.bottleContent)/sizeof(*Prefs.bottleContent);
+    for (int i=0; i<n; i++)
+        if (strcmp(ingredient->name, PYD_bottles[Prefs.bottleContent[i]]) == 0)
+            if (Prefs.bottleQuantity[i] >= ingredient->quantity)
+                return i;
+    if (ingredient->optional)
+        return -2;
+    return -1;
+}
 void populateCocktailsMenu()
 {
     menuValue_cocktails[0] = new Menu::menuValue<typeof(cocktailNumber)>("Seleziona Cocktail", -1);
@@ -64,18 +77,6 @@ void populateBottleContentMenu()
         menuValue_bottles[i] = new Menu::menuValue<typeof(bottleContent)>(PYD_bottles[i], i);
         bottleContentMenu_data[i] = menuValue_bottles[i];
     }
-}
-// Return the index of the bottle containing the ingredient, -1 if not found, -2 if not found and optional
-int isIngredientAvailable(const PYD_ingredient_t* ingredient)
-{
-    int n = sizeof(Prefs.bottleContent)/sizeof(*Prefs.bottleContent);
-    for (int i=0; i<n; i++)
-        if (strcmp(ingredient->name, PYD_bottles[Prefs.bottleContent[i]]) == 0)
-            if (Prefs.bottleQuantity[i] >= ingredient->quantity)
-                return i;
-    if (ingredient->optional)
-        return -2;
-    return -1;
 }
 result onPrepareCocktailEnter()
 {
