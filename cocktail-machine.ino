@@ -45,6 +45,8 @@ Menu::menuValue<typeof(bottleContent)>* menuValue_bottles[PYD_bottles_N];
 Menu::prompt* chooseCocktailMenu_data[PYD_cocktails_N+1];
 Menu::prompt* bottleContentMenu_data[PYD_bottles_N];
 
+int numberOfCocktailsAvailable = 0;
+
 /* Menu Actions */
 // Return the index of the bottle containing the ingredient, -1 if not found, -2 if not found and optional
 int isIngredientAvailable(const PYD_ingredient_t* ingredient)
@@ -67,16 +69,20 @@ bool areIngredientsAvailable(const PYD_cocktail_t* cocktail)
 }
 void populateCocktailsMenu()
 {
-    menuValue_cocktails[0] = new Menu::menuValue<typeof(cocktailNumber)>("Seleziona Cocktail", -1);
-    chooseCocktailMenu_data[0] = menuValue_cocktails[0];
+    int k = 0;
+    menuValue_cocktails[k] = new Menu::menuValue<typeof(cocktailNumber)>("Seleziona Cocktail", -1);
+    chooseCocktailMenu_data[k] = menuValue_cocktails[k];
     for (int i=0; i<PYD_cocktails_N; i++)
     {
         const PYD_cocktail_t* cocktail = PYD_cocktails[i];
-        Serial.print(cocktail->name);
-        Serial.println(areIngredientsAvailable(cocktail) ? " (disponibile)" : " (mancante)");
-        menuValue_cocktails[i+1] = new Menu::menuValue<typeof(cocktailNumber)>(cocktail->name, i);
-        chooseCocktailMenu_data[i+1] = menuValue_cocktails[i+1];
+        if (areIngredientsAvailable(cocktail))
+        {
+            k++;
+            menuValue_cocktails[k] = new Menu::menuValue<typeof(cocktailNumber)>(cocktail->name, i);
+            chooseCocktailMenu_data[k] = menuValue_cocktails[k];
+        }
     }
+    numberOfCocktailsAvailable = k;
 }
 void populateBottleContentMenu()
 {
