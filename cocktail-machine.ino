@@ -85,6 +85,8 @@ void populateBottleContentMenu()
 }
 result onPrepareCocktailEnter()
 {
+    if (cocktailNumber < 0)
+        return proceed;
     const PYD_cocktail_t* cocktail = PYD_cocktails[cocktailNumber];
     // Check if cocktail ingredients are available
     bool ingredientsAvailable = true;
