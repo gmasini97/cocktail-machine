@@ -134,10 +134,25 @@ result onPrepareCocktailEnter()
     delay(2000);
     return proceed;
 }
-result onBottleMenuEnter()
+result onBottlesMenuEvent(eventMask e)
+{
+    if (e == enterEvent)
+        return onBottlesMenuEnter();
+    else if (e == exitEvent)
+        return onBottlesMenuExit();
+    return proceed;
+}
+result onBottlesMenuEnter()
 {
     bottleNumber = 1;
     onBottleNumberUpdate();
+    return proceed;
+}
+result onBottlesMenuExit()
+{
+    Serial.println("onBottlesMenuExit");
+    Prefs.saveAll();
+    Machine.moveAxis(Prefs.glassAccessPosition, false);
     return proceed;
 }
 void onBottleNumberUpdate()
@@ -217,13 +232,13 @@ Menu::menuVariantShadows<typeof(bottleContent)> bottleContentMenuShadows = {
     &bottleContent
 };
 Menu::select<typeof(bottleContent)> bottleContentMenu(bottleContentMenuShadows.obj);
-MENU(bottlesMenu,"Bottiglie",onBottleMenuEnter,enterEvent,wrapStyle
+MENU(bottlesMenu,"Bottiglie",onBottlesMenuEvent,enterEvent|exitEvent,wrapStyle
     ,FIELD(bottleNumber,"Bottiglia","",1,BOTTLES_NUM,1,0,onBottleNumberUpdate,updateEvent,noStyle)
     ,SUBMENU(bottleContentMenu)
     ,FIELD(bottleQuantity,"Volume","mL",0,2000,100,10,onBottleQuantityUpdate,updateEvent,noStyle)
     ,EXIT("Indietro")
 );
-MENU(bottlesCalMenu,"Cal. Bottiglie",onBottleMenuEnter,enterEvent,wrapStyle
+MENU(bottlesCalMenu,"Cal. Bottiglie",onBottlesMenuEnter,enterEvent,wrapStyle
     ,FIELD(bottleNumber,"Bottiglia","",1,BOTTLES_NUM,1,0,onBottleNumberUpdate,updateEvent,noStyle)
     ,FIELD(bottlePosition,"Posizione","mm",0,STEPPER1_MAX_TRAVEL_MM,10,1,onBottlePositionUpdate,updateEvent,noStyle)
     ,EXIT("Indietro")
