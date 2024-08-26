@@ -23,6 +23,7 @@ void PYD_Machine::begin()
 {
     mStepperEngine->init();
     mStepper->begin();
+    mServo->begin();
 }
 
 void PYD_Machine::end()
@@ -48,9 +49,9 @@ bool PYD_Machine::moveAxis(float mm, bool blocking)
 
 void PYD_Machine::moveServo(int angle, bool blocking)
 {
-    // Move the servo to the given angle
+    if (mServo->position() == angle)
+        return;
     mServo->move(angle);
-    // Wait for the servo to reach the target angle
     if (blocking)
         delay(mPrefs->servoIdleTime);
 }
