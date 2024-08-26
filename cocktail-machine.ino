@@ -40,12 +40,10 @@ float bottlePosition = 0;
 const int PYD_cocktails_N = sizeof(PYD_cocktails)/sizeof(*PYD_cocktails);
 const int PYD_bottles_N = sizeof(PYD_bottles)/sizeof(*PYD_bottles);
 
-Menu::menuValue<typeof(cocktailNumber)>* menuValue_cocktails[PYD_cocktails_N+1];
+Menu::menuValue<typeof(cocktailNumber)>* menuValue_cocktails[127];
 Menu::menuValue<typeof(bottleContent)>* menuValue_bottles[PYD_bottles_N];
-Menu::prompt* chooseCocktailMenu_data[PYD_cocktails_N+1];
+Menu::prompt* chooseCocktailMenu_data[127];
 Menu::prompt* bottleContentMenu_data[PYD_bottles_N];
-
-int numberOfCocktailsAvailable = 0;
 
 /* Menu Actions */
 // Return the index of the bottle containing the ingredient, -1 if not found, -2 if not found and optional
@@ -66,31 +64,6 @@ bool areIngredientsAvailable(const PYD_cocktail_t* cocktail)
         if (isIngredientAvailable(&cocktail->ingredients[i]) == -1)
             return false;
     return true;
-}
-void populateCocktailsMenu()
-{
-    int k = 0;
-    menuValue_cocktails[k] = new Menu::menuValue<typeof(cocktailNumber)>("Seleziona Cocktail", -1);
-    chooseCocktailMenu_data[k] = menuValue_cocktails[k];
-    for (int i=0; i<PYD_cocktails_N; i++)
-    {
-        const PYD_cocktail_t* cocktail = PYD_cocktails[i];
-        if (areIngredientsAvailable(cocktail))
-        {
-            k++;
-            menuValue_cocktails[k] = new Menu::menuValue<typeof(cocktailNumber)>(cocktail->name, i);
-            chooseCocktailMenu_data[k] = menuValue_cocktails[k];
-        }
-    }
-    numberOfCocktailsAvailable = k;
-}
-void populateBottleContentMenu()
-{
-    for (int i=0; i<PYD_bottles_N; i++)
-    {
-        menuValue_bottles[i] = new Menu::menuValue<typeof(bottleContent)>(PYD_bottles[i], i);
-        bottleContentMenu_data[i] = menuValue_bottles[i];
-    }
 }
 result onPrepareCocktailEnter()
 {
@@ -286,6 +259,34 @@ MENU(mainMenu,"Main menu",doNothing,noEvent,wrapStyle
     ,OP("Riavvia",onRestartMenuEnter,enterEvent)
 );
 NAVROOT(nav, mainMenu, MENU_MAX_DEPTH, in, out);
+
+void populateCocktailsMenu()
+{
+    int k = 0;
+    menuValue_cocktails[k] = new Menu::menuValue<typeof(cocktailNumber)>("Seleziona Cocktail", -1);
+    chooseCocktailMenu_data[k] = menuValue_cocktails[k];
+    for (int i=0; i<PYD_cocktails_N; i++)
+    {
+        const PYD_cocktail_t* cocktail = PYD_cocktails[i];
+        if (areIngredientsAvailable(cocktail))
+        {
+            k++;
+            menuValue_cocktails[k] = new Menu::menuValue<typeof(cocktailNumber)>(cocktail->name, i);
+            chooseCocktailMenu_data[k] = menuValue_cocktails[k];
+        }
+        if (k == 126)
+            break;
+    }
+    ((Menu::menuNodeShadow*)chooseCocktailMenu.shadow)->sz = k+1;
+}
+void populateBottleContentMenu()
+{
+    for (int i=0; i<PYD_bottles_N; i++)
+    {
+        menuValue_bottles[i] = new Menu::menuValue<typeof(bottleContent)>(PYD_bottles[i], i);
+        bottleContentMenu_data[i] = menuValue_bottles[i];
+    }
+}
 
 void setup() {
     // Initialize Serial
