@@ -26,7 +26,7 @@ void PYD_Preferences::loadAll()
   mPreferences.getBytes("bottleContent", &bottleContent, sizeof(bottleContent));
   mPreferences.getBytes("bottleQuantity", &bottleQuantity, sizeof(bottleQuantity));
   mPreferences.getBytes("bottlePosition", &bottlePosition, sizeof(bottlePosition));
-  pourFullQuantity  = mPreferences.getShort("pourFullQuantity", DEFAULT_POUR_FULL_QUANTITY);
+  pourFullQuantity  = mPreferences.getShort("pourFullQuant", DEFAULT_POUR_FULL_QUANTITY);
   pourFullTime      = mPreferences.getShort("pourFullTime", DEFAULT_POUR_FULL_TIME);
   pourRefillTime    = mPreferences.getShort("pourRefillTime", DEFAULT_POUR_REFILL_TIME);
   pourDeadTime      = mPreferences.getShort("pourDeadTime", DEFAULT_POUR_DEAD_TIME);
@@ -34,7 +34,7 @@ void PYD_Preferences::loadAll()
   servoPourAngle    = mPreferences.getShort("servoPourAngle", DEFAULT_SERVO_POUR_ANGLE);
   servoIdleAngle    = mPreferences.getShort("servoIdleAngle", DEFAULT_SERVO_IDLE_ANGLE);
   servoIdleTime     = mPreferences.getShort("servoIdleTime", DEFAULT_SERVO_IDLE_TIME);
-  glassAccessPosition = mPreferences.getFloat("glassAccessPosition", DEFAULT_GLASS_ACCESS_POSITION);
+  glassAccessPosition = mPreferences.getFloat("glassAccessPos", DEFAULT_GLASS_ACCESS_POSITION);
 }
 
 void PYD_Preferences::saveAll()
@@ -42,7 +42,7 @@ void PYD_Preferences::saveAll()
   mPreferences.putBytes("bottleContent", (byte*)(&bottleContent), sizeof(bottleContent));
   mPreferences.putBytes("bottleQuantity", (byte*)(&bottleQuantity), sizeof(bottleQuantity));
   mPreferences.putBytes("bottlePosition", (byte*)(&bottlePosition), sizeof(bottlePosition));
-  mPreferences.putShort("pourFullQuantity", pourFullQuantity);
+  mPreferences.putShort("pourFullQuant", pourFullQuantity);
   mPreferences.putShort("pourFullTime", pourFullTime);
   mPreferences.putShort("pourRefillTime", pourRefillTime);
   mPreferences.putShort("pourDeadTime", pourDeadTime);
@@ -50,5 +50,5 @@ void PYD_Preferences::saveAll()
   mPreferences.putShort("servoPourAngle", servoPourAngle);
   mPreferences.putShort("servoIdleAngle", servoIdleAngle);
   mPreferences.putShort("servoIdleTime", servoIdleTime);
-  mPreferences.putFloat("glassAccessPosition", glassAccessPosition);
+  mPreferences.putFloat("glassAccessPos", glassAccessPosition);
 }
