@@ -32,6 +32,7 @@ MENU_OUTPUTS(out,MENU_MAX_DEPTH,LCD_OUT(lcd,{0,0,DISPLAY_COLS,DISPLAY_ROWS}),NON
 
 /* Menu Variables */
 int cocktailNumber = -1;
+int glassSize = 1; // 0: normal, 1: large
 int bottleNumber = 1;
 int16_t bottleContent = 0;
 float bottleQuantity = 0;
@@ -88,6 +89,8 @@ result onPrepareCocktailEnter()
         lcd.print(PYD_bottles[Prefs.bottleContent[bottle]]);
         Machine.moveAxis(Prefs.bottlePosition[bottle], true);
         int toPour = cocktail->ingredients[i].quantity;
+        if (glassSize == 0)
+            toPour /= 2;
         while (toPour > 0)
         {
             if (toPour >= Prefs.pourFullQuantity)
@@ -201,8 +204,13 @@ Menu::menuVariantShadows<typeof(cocktailNumber)> chooseCocktailMenuShadows={
     &cocktailNumber
 };
 Menu::choose<typeof(cocktailNumber)> chooseCocktailMenu(chooseCocktailMenuShadows.obj);
+TOGGLE(glassSize,toggleGlassSizeMenu,"Bicchiere: ",doNothing,noEvent,noStyle
+    ,VALUE("Normale",0,doNothing,noEvent)
+    ,VALUE("Grande",1,doNothing,noEvent)
+);
 MENU(cocktailsMenu,"Prepara Cocktail",doNothing,noEvent,wrapStyle
     ,SUBMENU(chooseCocktailMenu)
+    ,SUBMENU(toggleGlassSizeMenu)
     ,OP("Prepara",onPrepareCocktailEnter,enterEvent)
     ,EXIT("Indietro")
 );
