@@ -212,6 +212,15 @@ const PYD_cocktail_t cocktailMimosa = {
         {"Succo D'Arancia",75,0}
     }
 };
+const PYD_cocktail_t cocktailMojito = {
+    "Mojito",
+    5,
+    {
+        {"Rum Bianco",40,0},
+        {"Succo Di Limone",30,0},
+        {"Soda",10,0}
+    }
+};
 const PYD_cocktail_t cocktailMoscowMule = {
     "Moscow Mule",
     3,
