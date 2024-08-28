@@ -40,7 +40,7 @@ const PYD_cocktail_t cocktailBellini = {
     2,
     {
         {"Prosecco",100,0},
-        {"Peach puree",50,0}
+        {"Succo Di Pesca",50,0}
     }
 };
 const PYD_cocktail_t cocktailBlackRussian = {

@@ -41,6 +41,7 @@ const char* PYD_bottles[] =
     "Succo Di Lime",
     "Succo Di Limone",
     "Succo Di Mirtilli Rossi",
+    "Succo Di Pesca",
     "Succo Di Pompelmo",
     "Tequila",
     "Tonica",
