@@ -24,6 +24,8 @@ with open('recipes.json', encoding='utf8') as f:
 
     try:
         while True:
+            // TODO: implement genetic algorithm to find the best combination
+            // https://pygad.readthedocs.io/en/latest/
             combination = np.random.choice(ingredients, size=8, replace=False, p=probs)
             combination.sort()
             count = [ingredientsAvailable(recipe, combination) for recipe in recipes].count(True)
