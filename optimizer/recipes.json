@@ -25,7 +25,7 @@
         "label": "Bacardi White Rum" },
       { "unit": "cl",
         "amount": 2,
-        "ingredient": "Lime juice" },
+        "ingredient": "Lemon juice" },
       { "unit": "cl",
         "amount": 1,
         "ingredient": "Syrup",
@@ -104,13 +104,13 @@
         "label": "White Cuban Rum" },
       { "unit": "cl",
         "amount": 3,
-        "ingredient": "Lime juice" },
+        "ingredient": "Lemon juice" },
       { "special": "6 Mint sprigs" },
       { "special": "2 teaspoons white sugar" },
       { "special": "Soda water" }
     ],
     "garnish": "Mint leaves and lemon slice",
-    "preparation": "Muddle mint sprigs with sugar and lime juice. Add splash of soda water and fill glass with cracked ice. Pour rum and top with soda water. Serve with straw." },
+    "preparation": "Muddle mint sprigs with sugar and Lemon juice. Add splash of soda water and fill glass with cracked ice. Pour rum and top with soda water. Serve with straw." },
   { "name": "Horse's Neck",
     "glass": "highball",
     "category": "Longdrink",
@@ -304,7 +304,7 @@
         "ingredient": "Cola" },
       { "unit": "cl",
         "amount": 1,
-        "ingredient": "Lime juice" }
+        "ingredient": "Lemon juice" }
     ],
     "garnish": "Lime wedge",
     "preparation": "Build all ingredients in a highball glass filled with ice." },
@@ -387,7 +387,7 @@
         "label": "Cointreau" },
       { "unit": "cl",
         "amount": 1.5,
-        "ingredient": "Lime juice" }
+        "ingredient": "Lemon juice" }
     ],
     "preparation": "Shake with ice cubes. Strain into cocktail glass rimmed with salt (note:Fruit Margarita - blend selected fruit with the above recipe)." },
   { "name": "French 75",
@@ -421,7 +421,7 @@
         "ingredient": "Triple Sec" },
       { "unit": "cl",
         "amount": 1.5,
-        "ingredient": "Lime juice" }
+        "ingredient": "Lemon juice" }
     ],
     "preparation": "Shake and strain into a chilled cocktail glass." },
   { "name": "Pina Colada",
@@ -511,7 +511,7 @@
         "ingredient": "White rum" },
       { "unit": "cl",
         "amount": 2.5,
-        "ingredient": "Lime juice" },
+        "ingredient": "Lemon juice" },
       { "unit": "cl",
         "amount": 1.5,
         "ingredient": "Syrup",
@@ -725,7 +725,7 @@
         "label": "Orgeat syrup" },
       { "unit": "cl",
         "amount": 1,
-        "ingredient": "Lime juice" }
+        "ingredient": "Lemon juice" }
     ],
     "garnish": "Pineapple spear, mint leaves and lime wedge",
     "preparation": "Shake and strain into highball glass. Serve with straw." },
@@ -743,7 +743,7 @@
       { "unit": "cl",
         "amount": 6,
         "ingredient": "Pineapple juice" },
-      { "special": "1 dash Lime juice" },
+      { "special": "1 dash Lemon juice" },
       { "special": "Top with Prosecco" }
     ] },
   { "name": "Sex on the Beach",
@@ -875,7 +875,7 @@
         "ingredient": "Pineapple juice" },
       { "unit": "cl",
         "amount": 1.5,
-        "ingredient": "Lime juice" },
+        "ingredient": "Lemon juice" },
       { "unit": "cl",
         "amount": 1,
         "ingredient": "Syrup",
@@ -907,11 +907,11 @@
         "ingredient": "Ginger beer" },
       { "unit": "cl",
         "amount": 0.5,
-        "ingredient": "Lime juice" },
+        "ingredient": "Lemon juice" },
       { "special": "1 slice lime in a highball glass" }
     ],
     "garnish": "Lime slice",
-    "preparation": "Combine the vodka and ginger beer. Add lime juice." },
+    "preparation": "Combine the vodka and ginger beer. Add Lemon juice." },
   { "name": "John Collins",
     "glass": "highball",
     "category": "Longdrink",
@@ -968,7 +968,7 @@
         "ingredient": "Tequila" },
       { "unit": "cl",
         "amount": 1.5,
-        "ingredient": "Lime juice" },
+        "ingredient": "Lemon juice" },
       { "special": "2 bar spoons of Agave nectar" }
     ],
     "preparation": "Shake and strain into a chilled cocktail glass." },
@@ -1055,7 +1055,7 @@
         "label": "Maraschino" },
       { "unit": "cl",
         "amount": 1.5,
-        "ingredient": "Lime juice" }
+        "ingredient": "Lemon juice" }
     ],
     "preparation": "Shake with ice cubes. Strain into a double cocktail glass." },
   { "name": "Dark 'n' Stormy",
@@ -1080,7 +1080,7 @@
         "ingredient": "Gin" },
       { "unit": "cl",
         "amount": 1.5,
-        "ingredient": "Lime juice" },
+        "ingredient": "Lemon juice" },
       { "unit": "cl",
         "amount": 1.5,
         "ingredient": "Lemon juice" },
@@ -1144,7 +1144,7 @@
         "label": "Cointreau" },
       { "unit": "cl",
         "amount": 1.5,
-        "ingredient": "Lime juice" },
+        "ingredient": "Lemon juice" },
       { "unit": "cl",
         "amount": 3,
         "ingredient": "Cranberry juice" }
@@ -1229,7 +1229,7 @@
         "ingredient": "Orange juice" },
       { "unit": "cl",
         "amount": 1,
-        "ingredient": "Lime juice" },
+        "ingredient": "Lemon juice" },
       { "special": "1 teaspoon clear honey" },
       { "special": "Half slice onion finely chopped" },
       { "special": "Few slices fresh red hot chili peppers" },
@@ -1250,7 +1250,7 @@
         "ingredient": "Triple Sec" },
       { "unit": "cl",
         "amount": 3,
-        "ingredient": "Lime juice" }
+        "ingredient": "Lemon juice" }
     ],
     "preparation": "Shake and strain into a chilled cocktail glass." },
   { "name": "White Lady",
