@@ -22,12 +22,19 @@ with open('recipes.json', encoding='utf8') as f:
     bestCombination = []
     bestCombinationCount = 0
 
-    while True:
-        combination = np.random.choice(ingredients, size=8, replace=False, p=probs)
-        count = [ingredientsAvailable(recipe, combination) for recipe in recipes].count(True)
-        if count > bestCombinationCount:
-            bestCombination = combination
-            bestCombinationCount = count
-            print(bestCombination, bestCombinationCount)
-            if bestCombinationCount == len(recipes):
-                break
+    try:
+        while True:
+            combination = np.random.choice(ingredients, size=8, replace=False, p=probs)
+            combination.sort()
+            count = [ingredientsAvailable(recipe, combination) for recipe in recipes].count(True)
+            if count > bestCombinationCount:
+                bestCombination = combination
+                bestCombinationCount = count
+                print(bestCombination, bestCombinationCount)
+                if bestCombinationCount == len(recipes):
+                    break
+    except KeyboardInterrupt:
+        print("Cocktails available:")
+        for recipe in recipes:
+            if ingredientsAvailable(recipe, bestCombination):
+                print(recipe['name'])
