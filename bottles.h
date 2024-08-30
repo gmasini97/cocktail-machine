@@ -17,6 +17,7 @@ const char* PYD_bottles[] =
     "Gin",
     "Ginger Ale",
     "Ginger Beer",
+    "Granatina",
     "Grappa Alla Pesca",
     "Kirsch",
     "Lager",

@@ -248,6 +248,16 @@ const PYD_cocktail_t cocktailPinaColada = {
         {"Latte Di Cocco",30,0}
     }
 };
+const PYD_cocktail_t cocktailSanFrancisco = {
+    "San Francisco",
+    3,
+    {
+        {"Succo D'Arancia",50,0},
+        {"Succo D'Ananas",50,0},
+        {"Soda",50,0},
+        {"Granatina",10,0}
+    }
+};
 const PYD_cocktail_t cocktailScrewdriver = {
     "Screwdriver",
     2,
@@ -300,6 +310,14 @@ const PYD_cocktail_t cocktailVesper = {
         {"Gin",60,0},
         {"Vodka",15,0},
         {"Lillet Blonde",8,0},
+    }
+};
+const PYD_cocktail_t cocktailVirginPinaColada = {
+    "Virgin Pina Colada",
+    2,
+    {
+        {"Succo D'Ananas",75,0},
+        {"Latte Di Cocco",75,0}
     }
 };
 const PYD_cocktail_t cocktailVodkaLemon = {
