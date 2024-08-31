@@ -346,6 +346,8 @@ void setup() {
     lcd.setCursor(0,0);
     lcd.print("Servo Test...");
     Machine.servoTest();
+    
+    Machine.moveAxis(Prefs.glassAccessPosition, true);
 }
 
 void loop() {
