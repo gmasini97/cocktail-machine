@@ -239,6 +239,24 @@ const PYD_cocktail_t cocktailNegroni = {
         {"Bitter",25,0}
     }
 };
+const PYD_cocktail_t cocktailOrangeBlossom = {
+    "Orange Blossom",
+    3,
+    {
+        {"Gin",50,0},
+        {"Succo D'Arancia",50,0},
+        {"Vermouth",50,0}
+    }
+};
+const PYD_cocktail_t cocktailPineappleVodka = {
+    "Pineapple Vodka",
+    2,
+    {
+        {"Vodka",50,0},
+        {"Succo D'Ananas",75,0},
+        {"Granatina",15,0}
+    }
+};
 const PYD_cocktail_t cocktailPinaColada = {
     "Pina Colada",
     3,
@@ -250,7 +268,7 @@ const PYD_cocktail_t cocktailPinaColada = {
 };
 const PYD_cocktail_t cocktailSanFrancisco = {
     "San Francisco",
-    3,
+    4,
     {
         {"Succo D'Arancia",50,0},
         {"Succo D'Ananas",50,0},
@@ -347,6 +365,21 @@ const PYD_cocktail_t cocktailWhiteLady = {
     }
 };
 
+const PYD_cocktail_t cocktailTest10Ml = {
+    "Test 10mL",
+    1,
+    {
+        {"Vuoto",10,0}
+    }
+};
+const PYD_cocktail_t cocktailTest20Ml = {
+    "Test 20mL",
+    1,
+    {
+        {"Vuoto",20,0}
+    }
+};
+
 const PYD_cocktail_t* PYD_cocktails[] =
 {
     &cocktailAmericano,
@@ -373,7 +406,9 @@ const PYD_cocktail_t* PYD_cocktails[] =
     &cocktailMimosa,
     &cocktailMoscowMule,
     &cocktailNegroni,
+    &cocktailOrangeBlossom,
     &cocktailPinaColada,
+    &cocktailPineappleVodka,
     &cocktailScrewdriver,
     &cocktailSanFrancisco,
     &cocktailSeaBreeze,
@@ -384,7 +419,9 @@ const PYD_cocktail_t* PYD_cocktails[] =
     &cocktailVesper,
     &cocktailVodkaLemon,
     &cocktailWhiskeySour,
-    &cocktailWhiteLady
+    &cocktailWhiteLady,
+    &cocktailTest10Ml,
+    &cocktailTest20Ml
 };
 
 #endif /* COCKTAILS_H */
