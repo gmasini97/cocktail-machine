@@ -248,11 +248,11 @@ const PYD_cocktail_t cocktailOrangeBlossom = {
         {"Vermouth",50,0}
     }
 };
-const PYD_cocktail_t cocktailPineappleVodka = {
-    "Pineapple Vodka",
+const PYD_cocktail_t cocktailPineappleRum = {
+    "Pineapple Rum",
     2,
     {
-        {"Vodka",50,0},
+        {"Rum Bianco",50,0},
         {"Succo D'Ananas",75,0},
         {"Granatina",15,0}
     }
@@ -408,7 +408,7 @@ const PYD_cocktail_t* PYD_cocktails[] =
     &cocktailNegroni,
     &cocktailOrangeBlossom,
     &cocktailPinaColada,
-    &cocktailPineappleVodka,
+    &cocktailPineappleRum,
     &cocktailScrewdriver,
     &cocktailSanFrancisco,
     &cocktailSeaBreeze,
