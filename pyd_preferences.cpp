@@ -52,3 +52,9 @@ void PYD_Preferences::saveAll()
   mPreferences.putShort("servoIdleTime", servoIdleTime);
   mPreferences.putFloat("glassAccessPos", glassAccessPosition);
 }
+
+void PYD_Preferences::clearAll()
+{
+  mPreferences.clear();
+  loadAll();
+}

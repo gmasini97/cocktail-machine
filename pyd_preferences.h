@@ -28,6 +28,7 @@ class PYD_Preferences
 
     void loadAll();
     void saveAll();
+    void clearAll();
 
   private:
     Preferences mPreferences;
