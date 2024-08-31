@@ -62,8 +62,6 @@ void PYD_Machine::home()
     moveServo(mPrefs->servoIdleAngle, true);
     // Home the stepper motor
     mStepper->home();
-    // Move the carriage to the glass access position
-    mStepper->moveToMM(mPrefs->glassAccessPosition, true);
     // Set the homed flag
     mHomed = true;
 }
