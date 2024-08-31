@@ -317,10 +317,6 @@ void setup() {
         Serial.println("Cannot load preferences.");
         exit(-1);
     }
-    Prefs.bottleContent[0] = 11;
-    Prefs.bottleQuantity[0] = 1000;
-    Prefs.bottleContent[1] = 40;
-    Prefs.bottleQuantity[1] = 1000;
 
     // Initialize Rotary Encoder
     rotaryEncoder.begin();
