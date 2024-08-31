@@ -185,6 +185,11 @@ void onCalibrationMenuExit()
     Machine.moveAxis(Prefs.glassAccessPosition, false);
     Prefs.saveAll();
 }
+result clearMemoryEnter()
+{
+    Prefs.clearAll();
+    return proceed;
+}
 result onRestartMenuEnter()
 {
     Machine.moveAxis(10, true);
@@ -253,11 +258,16 @@ MENU(glassCalMenu,"Cal. Bicchiere",doNothing,noEvent,wrapStyle
     ,FIELD(Prefs.glassAccessPosition,"Posizione","mm",0,STEPPER1_MAX_TRAVEL_MM,10,1,onGlassAccessPositionUpdate,updateEvent,noStyle)
     ,EXIT("Indietro")
 );
+MENU(clearMemoryMenu,"Pulisci Memoria",doNothing,noEvent,wrapStyle
+    ,OP("Cancella",clearMemoryEnter,enterEvent)
+    ,EXIT("Indietro")
+);
 MENU(calibrationMenu,"Calibrazione",onCalibrationMenuExit,exitEvent,wrapStyle
     ,SUBMENU(bottlesCalMenu)
     ,SUBMENU(servoCalMenu)
     ,SUBMENU(dispenserCalMenu)
     ,SUBMENU(glassCalMenu)
+    ,SUBMENU(clearMemoryMenu)
     ,EXIT("Indietro")
 );
 MENU(mainMenu,"Main menu",doNothing,noEvent,wrapStyle
