@@ -13,7 +13,7 @@ jobs:
     - run: sudo apt-get update --quiet
     - run: sudo apt-get install --assume-yes --no-install-recommends --quiet bash bash-completion ca-certificates curl python-is-python3 python3 python3-pip ssh tree
     - run: sudo pip install adafruit-nrfutil pyserial
-    - run: sudo curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=/usr/bin sudo sh -s ${ARDUINO_CLI_VERSION}
+    - run: cd /usr && sudo curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sudo sh -s ${ARDUINO_CLI_VERSION}
     - run: arduino-cli config init 
     - run: arduino-cli core update-index
     - run: arduino-cli core install esp32:esp32@2.0.17
