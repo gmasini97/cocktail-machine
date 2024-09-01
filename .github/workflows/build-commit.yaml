@@ -22,6 +22,8 @@ jobs:
     - run: arduino-cli lib install FastAccelStepper@0.30.14
     - run: arduino-cli lib install ESP32Servo@3.0.5
     - run: cd ~/Arduino/libraries && git clone https://github.com/fmalpartida/New-LiquidCrystal
+    - run: ls 
+    - run: ls ..
     - run: arduino-cli compile -b esp32:esp32:esp32doit-devkit-v1 --output-dir build
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
