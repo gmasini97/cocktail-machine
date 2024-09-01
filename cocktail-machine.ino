@@ -273,10 +273,26 @@ MENU(calibrationMenu,"Calibrazione",onCalibrationMenuExit,exitEvent,wrapStyle
     ,SUBMENU(clearMemoryMenu)
     ,EXIT("Indietro")
 );
+TOGGLE(Prefs.updateCheck,toggleUpdateCheck,"Modo: ",doNothing,noEvent,noStyle
+    ,VALUE("Manuale",0,doNothing,noEvent)
+    ,VALUE("All'Avvio",1,doNothing,noEvent)
+);
+TOGGLE(Prefs.updateChannel,toggleUpdateChannelMenu,"Canale: ",doNothing,noEvent,noStyle
+    ,VALUE("Stable",0,doNothing,noEvent)
+    ,VALUE("Beta",1,doNothing,noEvent)
+    ,VALUE("Dev",2,doNothing,noEvent)
+);
+MENU(updateMenu,"Aggiornamenti OTA",doNothing,noEvent,wrapStyle
+    ,SUBMENU(toggleUpdateCheck)
+    ,SUBMENU(toggleUpdateChannelMenu)
+    ,OP("Aggiorna Adesso",doNothing,noEvent)
+    ,EXIT("Indietro")
+);
 MENU(mainMenu,"Main menu",doNothing,noEvent,wrapStyle
     ,SUBMENU(cocktailsMenu)
     ,SUBMENU(bottlesMenu)
     ,SUBMENU(calibrationMenu)
+    ,SUBMENU(updateMenu)
     ,OP("Riavvia",onRestartMenuEnter,enterEvent)
 );
 NAVROOT(nav, mainMenu, MENU_MAX_DEPTH, in, out);

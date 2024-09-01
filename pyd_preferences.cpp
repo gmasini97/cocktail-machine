@@ -35,6 +35,8 @@ void PYD_Preferences::loadAll()
   servoIdleAngle    = mPreferences.getShort("servoIdleAngle", DEFAULT_SERVO_IDLE_ANGLE);
   servoIdleTime     = mPreferences.getShort("servoIdleTime", DEFAULT_SERVO_IDLE_TIME);
   glassAccessPosition = mPreferences.getFloat("glassAccessPos", DEFAULT_GLASS_ACCESS_POSITION);
+  updateCheck       = mPreferences.getChar("updateCheck", DEFAULT_UPDATE_CHECK);
+  updateChannel     = mPreferences.getChar("updateChannel", DEFAULT_UPDATE_CHANNEL);
 }
 
 void PYD_Preferences::saveAll()
@@ -51,6 +53,8 @@ void PYD_Preferences::saveAll()
   mPreferences.putShort("servoIdleAngle", servoIdleAngle);
   mPreferences.putShort("servoIdleTime", servoIdleTime);
   mPreferences.putFloat("glassAccessPos", glassAccessPosition);
+  mPreferences.putChar("updateCheck", updateCheck);
+  mPreferences.putChar("updateChannel", updateChannel);
 }
 
 void PYD_Preferences::clearAll()

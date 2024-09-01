@@ -21,6 +21,8 @@
 #define DEFAULT_SERVO_IDLE_ANGLE        40          // degrees
 #define DEFAULT_SERVO_IDLE_TIME         1000        // ms
 #define DEFAULT_GLASS_ACCESS_POSITION   0           // mm
+#define DEFAULT_UPDATE_CHECK            0           // 0=manual, 1=at-boot
+#define DEFAULT_UPDATE_CHANNEL          0           // 0=stable, 1=beta, 2=dev
 #define DEFAULT_AUTO_SAVE               false       // true or false
 
 // I2C Display

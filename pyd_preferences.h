@@ -20,6 +20,8 @@ class PYD_Preferences
     int16_t   servoIdleAngle;                 // Servo position when resting [degrees]
     int16_t   servoIdleTime;                  // Time the takes to return to idle position [ms]
     float     glassAccessPosition;            // Position of the glass access [mm]
+    int8_t    updateCheck;                    // Check for updates: 0=manual, 1=at-boot
+    int8_t    updateChannel;                  // Update channel: 0=stable, 1=beta, 2=dev
     
     PYD_Preferences() {};
 
