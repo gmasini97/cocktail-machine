@@ -40,4 +40,5 @@ jobs:
         asset_name: build.bin
         tag: ${{ github.ref }}-dev
         overwrite: true
+        release_name: ${{ github.ref }}-dev
         body: "Build for commit ${{ github.sha }}"
