@@ -10,8 +10,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - run: ls 
-    - run: ls ..
     - run: sudo apt-get update --quiet
     - run: sudo apt-get install --assume-yes --no-install-recommends --quiet bash bash-completion ca-certificates curl python-is-python3 python3 python3-pip ssh tree
     - run: sudo pip install adafruit-nrfutil pyserial
@@ -24,6 +22,7 @@ jobs:
     - run: arduino-cli lib install FastAccelStepper@0.30.14
     - run: arduino-cli lib install ESP32Servo@3.0.5
     - run: cd ~/Arduino/libraries && git clone https://github.com/fmalpartida/New-LiquidCrystal
+    - uses: actions/checkout@v4
     - run: arduino-cli compile -b esp32:esp32:esp32doit-devkit-v1 --output-dir build
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
