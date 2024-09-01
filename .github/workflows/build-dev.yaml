@@ -42,3 +42,4 @@ jobs:
         overwrite: true
         release_name: ${{ github.ref }}-dev
         body: "Build for commit ${{ github.sha }}"
+        prerelease: true
