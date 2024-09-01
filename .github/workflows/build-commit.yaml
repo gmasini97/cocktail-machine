@@ -43,6 +43,6 @@ jobs:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: build/cocktail-machine.ino.bin
         asset_name: build.bin
-        tag: ${{ github.ref }}-push
+        tag: ${{ github.ref }}-dev
         overwrite: true
         body: "Build for commit ${{ github.sha }}"
