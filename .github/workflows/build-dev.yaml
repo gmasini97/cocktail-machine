@@ -1,4 +1,4 @@
-name: "Build Channel Commit"
+name: "Build Channel Dev"
 
 on:
   push:
