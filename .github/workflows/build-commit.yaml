@@ -24,11 +24,16 @@ jobs:
     - run: cd ~/Arduino/libraries && git clone https://github.com/fmalpartida/New-LiquidCrystal
     - uses: actions/checkout@v4
     - run: arduino-cli compile -b esp32:esp32:esp32doit-devkit-v1 --output-dir build
-    - uses: "marvinpinto/action-automatic-releases@latest"
+    - uses: actions/upload-artifact@v3
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        draft: false
-        prerelease: true
-        automatic_release_tag: "commit"
-        title: "Commit Build"
-        files: "build/cocktail-machine.ino.bin"
+        filename: build/cocktail-machine.ino.bin
+        path: build.bin
+        retention-days: 5
+    # - uses: "marvinpinto/action-automatic-releases@latest"
+    #   with:
+    #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+    #     draft: false
+    #     prerelease: true
+    #     automatic_release_tag: "commit"
+    #     title: "Commit Build"
+    #     files: "build/cocktail-machine.ino.bin"
