@@ -31,12 +31,6 @@ jobs:
         cd ~/Arduino/libraries && git clone https://github.com/fmalpartida/New-LiquidCrystal
     - name: Compile
       run: arduino-cli compile -b esp32:esp32:esp32doit-devkit-v1 --output-dir build
-    - name: Upload Binary
-      uses: actions/upload-artifact@v3
-      with:
-        name: build.bin
-        path: build/cocktail-machine.ino.bin
-        retention-days: 5
     - name: Upload Build to Releases
       uses: svenstaro/upload-release-action@v2
       with:
