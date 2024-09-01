@@ -34,11 +34,12 @@ jobs:
         name: build.bin
         path: build/cocktail-machine.ino.bin
         retention-days: 5
-    # - uses: "marvinpinto/action-automatic-releases@latest"
-    #   with:
-    #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-    #     draft: false
-    #     prerelease: true
-    #     automatic_release_tag: "commit"
-    #     title: "Commit Build"
-    #     files: "build/cocktail-machine.ino.bin"
+    - name: Upload Build to Releases
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: build/cocktail-machine.ino.bin
+        asset_name: build.bin
+        tag: ${{ github.ref }}-push
+        overwrite: true
+        body: "Build for commit ${{ github.sha }}"
