@@ -245,7 +245,7 @@ const PYD_cocktail_t cocktailOrangeBlossom = {
     {
         {"Gin",50,0},
         {"Succo D'Arancia",50,0},
-        {"Vermouth",50,0}
+        {"Vermouth Rosso",50,0}
     }
 };
 const PYD_cocktail_t cocktailPineappleRum = {
