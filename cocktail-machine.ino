@@ -8,9 +8,10 @@
  *  - https://github.com/gin66/FastAccelStepper
  *  - https://github.com/espressif/arduino-esp32/tree/master/libraries/Preferences
  *  - https://github.com/madhephaestus/ESP32Servo
- *  - 
+ *  - https://github.com/tzapu/WiFiManager
  */
 
+#include <WiFiManager.h>
 #include <LiquidCrystal_I2C.h>
 #include <menu.h>
 #include <menuIO/lcdOut.h>
@@ -22,6 +23,8 @@
 #include "pyd_machine.h"
 #include "bottles.h"
 #include "cocktails.h"
+
+WiFiManager wifiManager;
 
 // Menu Inputs
 PYD_RotaryEncoder rotaryEncoder(ENCODER_PIN_A, ENCODER_PIN_B, ENCODER_PIN_BUTTON);
@@ -336,6 +339,8 @@ void setup() {
         Serial.println("Cannot load preferences.");
         exit(-1);
     }
+
+    wifiManager.autoConnect();
 
     // Initialize Rotary Encoder
     rotaryEncoder.begin();
