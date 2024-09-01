@@ -87,4 +87,9 @@
 #define AUX1_PIN 1
 #define AUX2_PIN 3
 
+// Updates (OTA) Settings
+#define UPDATE_URL_STABLE   "https://github.com/gmasini97/cocktail-machine/releases/download/main-stable/build.bin"
+#define UPDATE_URL_BETA     "https://github.com/gmasini97/cocktail-machine/releases/download/main-beta/build.bin"
+#define UPDATE_URL_DEV      "https://github.com/gmasini97/cocktail-machine/releases/download/main-dev/build.bin"
+
 #endif /* CONFIG_H */
