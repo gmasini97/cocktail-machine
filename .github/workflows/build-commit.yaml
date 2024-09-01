@@ -1,0 +1,33 @@
+name: "Build Channel Commit"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - run: apt-get update --quiet
+    - run: apt-get install --assume-yes --no-install-recommends --quiet bash bash-completion ca-certificates curl python-is-python3 python3 python3-pip ssh tree
+    - run: pip install adafruit-nrfutil pyserial
+    - run: curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh -s ${ARDUINO_CLI_VERSION}
+    - run: arduino-cli config init 
+    - run: arduino-cli core update-index
+    - run: arduino-cli core install esp32:esp32@2.0.17
+    - run: arduino-cli lib install "ArduinoMenu library"@4.21.4
+    - run: arduino-cli lib install QDEC@2.1.0
+    - run: arduino-cli lib install FastAccelStepper@0.30.14
+    - run: arduino-cli lib install ESP32Servo@3.0.5
+    - run: cd ~/Arduino/libraries && git clone https://github.com/fmalpartida/New-LiquidCrystal
+    - run: arduino-cli compile -b esp32:esp32:esp32doit-devkit-v1 --output-dir build
+    - uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        draft: false
+        prerelease: true
+        automatic_release_tag: "commit"
+        title: "Commit Build"
+        files: "build/cocktail-machine.ino.bin"
