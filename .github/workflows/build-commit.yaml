@@ -26,8 +26,8 @@ jobs:
     - run: arduino-cli compile -b esp32:esp32:esp32doit-devkit-v1 --output-dir build
     - uses: actions/upload-artifact@v3
       with:
-        filename: build/cocktail-machine.ino.bin
-        path: build.bin
+        name: build.bin
+        path: build/cocktail-machine.ino.bin
         retention-days: 5
     # - uses: "marvinpinto/action-automatic-releases@latest"
     #   with:
