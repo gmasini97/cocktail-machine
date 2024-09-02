@@ -31,7 +31,7 @@ jobs:
         arduino-cli lib install WifiManager@2.0.17
         cd ~/Arduino/libraries && git clone https://github.com/fmalpartida/New-LiquidCrystal
     - name: Compile
-      run: arduino-cli compile -b esp32:esp32:esp32doit-devkit-v1 --output-dir build
+      run: arduino-cli compile -b esp32:esp32:esp32doit-devkit-v1 --output-dir build --build-property "build.extra_flags=\"VERSION=${{ github.sha }}\""
     - name: Upload Build to Releases
       uses: svenstaro/upload-release-action@v2
       with:
