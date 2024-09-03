@@ -1,0 +1,25 @@
+name: "Build New Release"
+on:
+  release:
+    types: [ "published" ]
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: mircopergreffi/arduino-cli:1.0.4-2.0.17
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Install Arduino Libraries
+      run: |
+        arduino-cli core update-index
+        arduino-cli core install esp32:esp32@2.0.17 "ArduinoMenu library"@4.21.4 QDEC@2.1.0 FastAccelStepper@0.30.14 ESP32Servo@3.0.5 WifiManager@2.0.17
+        cd ~/Arduino/libraries && git clone https://github.com/fmalpartida/New-LiquidCrystal
+    - name: Compile
+      run: arduino-cli compile -b esp32:esp32:esp32doit-devkit-v1 --output-dir build --build-property "build.extra_flags=\"-VERSION=${{ github.sha }}\""
+    - name: Upload Build to Releases
+      run: |
+        apt-get install -y gh
+        cp build/cocktail-machine.ino.bin build.bin
+        gh release upload ${{github.event.release.tag_name}} build.bin
