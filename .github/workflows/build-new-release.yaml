@@ -14,11 +14,14 @@ jobs:
     - name: Install Arduino Libraries
       run: |
         arduino-cli core update-index
-        arduino-cli core install esp32:esp32@2.0.17 "ArduinoMenu library"@4.21.4 QDEC@2.1.0 FastAccelStepper@0.30.14 ESP32Servo@3.0.5 WifiManager@2.0.17
-        cd ~/Arduino/libraries && git clone https://github.com/fmalpartida/New-LiquidCrystal
+        arduino-cli config set library.enable_unsafe_install true
+        arduino-cli lib install "ArduinoMenu library"@4.21.4 QDEC@2.1.0 FastAccelStepper@0.30.14 ESP32Servo@3.0.5 WifiManager@2.0.17
+        arduino-cli lib install --git-url https://github.com/fmalpartida/New-LiquidCrystal.git
     - name: Compile
-      run: arduino-cli compile -b esp32:esp32:esp32doit-devkit-v1 --output-dir build --build-property "build.extra_flags=\"-VERSION=${{ github.sha }}\""
+      run: arduino-cli compile -b esp32:esp32:esp32doit-devkit-v1 --output-dir build --build-property "build.extra_flags=\"-DVERSION=${{github.event.release.tag_name}}\""
     - name: Upload Build to Releases
+      env:
+        GITHUB_TOKEN: ${{ github.TOKEN }}
       run: |
         apt-get install -y gh
         cp build/cocktail-machine.ino.bin build.bin
