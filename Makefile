@@ -1,3 +1,5 @@
+BUILD_VERSION := v0.0.0-alpha
+
 ARDUINO_CLI_VERSION := 1.0.4
 ARDUINO_ESP32_VERSION := 2.0.17
 LIB_ARDUINO_MENU_VERSION := 4.21.4
@@ -23,7 +25,7 @@ install:
 
 build:
 	@if test -d bin; then \
-		bin/arduino-cli compile -b esp32:esp32:esp32doit-devkit-v1 --output-dir build --build-property "build.extra_flags=\"-DVERSION=${BUILD_VERSION:-v0.0.0-alpha}\""; \
+		bin/arduino-cli compile -b esp32:esp32:esp32doit-devkit-v1 --output-dir build --build-property "build.extra_flags=\"-DVERSION=${BUILD_VERSION}\""; \
 	else \
 		echo "Please run 'make install' first" ; \
 	fi
