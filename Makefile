@@ -21,8 +21,11 @@ install:
 		WifiManager@${LIB_WIFI_MANAGER}
 	bin/arduino-cli lib install --git-url https://github.com/fmalpartida/New-LiquidCrystal.git
 
-build: install
-	bin/arduino-cli compile -b esp32:esp32:esp32doit-devkit-v1 --output-dir build --build-property "build.extra_flags=\"-DVERSION=v0.0.0\""
-
+build:
+	@if test -d bin; then \
+		bin/arduino-cli compile -b esp32:esp32:esp32doit-devkit-v1 --output-dir build --build-property "build.extra_flags=\"-DVERSION=v0.0.0\""; \
+	else \
+		echo "Please run 'make install' first" ; \
+	fi
 clean:
 	rm -rf build
