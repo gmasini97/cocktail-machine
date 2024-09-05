@@ -18,6 +18,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.TOKEN }}
       run: |
-        apt-get install -y gh
+        sudo apt-get install -y gh
         cp build/cocktail-machine.ino.bin build.bin
         gh release upload ${{github.event.release.tag_name}} build.bin
