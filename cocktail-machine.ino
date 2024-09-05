@@ -11,7 +11,7 @@
  *  - https://github.com/tzapu/WiFiManager
  */
 
-#include <WiFiManager.h>
+// #include <WiFiManager.h>
 #include <LiquidCrystal_I2C.h>
 #include <menu.h>
 #include <menuIO/lcdOut.h>
@@ -24,7 +24,7 @@
 #include "bottles.h"
 #include "cocktails.h"
 
-WiFiManager wifiManager;
+// WiFiManager wifiManager;
 
 // Menu Inputs
 PYD_RotaryEncoder rotaryEncoder(ENCODER_PIN_A, ENCODER_PIN_B, ENCODER_PIN_BUTTON);
@@ -337,7 +337,7 @@ void setup() {
         exit(-1);
     }
 
-    wifiManager.autoConnect();
+    // wifiManager.autoConnect();
 
     // Initialize Rotary Encoder
     rotaryEncoder.begin();
