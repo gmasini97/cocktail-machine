@@ -1,20 +1,15 @@
 {
   "name": "ESP32 Cocktail Machine Firmware",
-  "build": { "dockerfile": "Dockerfile" },
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
 
   "customizations": {
     "vscode": {
       "extensions": [
-        "vsciot-vscode.vscode-arduino",
+        "ms-vscode.cpptools",
         "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.makefile-tools",
         "Wokwi.wokwi-vscode"
-      ],
-      "settings": {
-        "arduino.commandPath": "arduino-cli",
-        "arduino.path": "/usr/bin",
-        "arduino.useArduinoCli": true,
-        "telemetry.enableTelemetry": false
-      }
+      ]
     },
     "codespaces": {
       "openFiles": [
