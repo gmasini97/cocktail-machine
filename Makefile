@@ -23,7 +23,7 @@ install:
 
 build:
 	@if test -d bin; then \
-		bin/arduino-cli compile -b esp32:esp32:esp32doit-devkit-v1 --output-dir build --build-property "build.extra_flags=\"-DVERSION=v0.0.0\""; \
+		bin/arduino-cli compile -b esp32:esp32:esp32doit-devkit-v1 --output-dir build --build-property "build.extra_flags=\"-DVERSION=${BUILD_VERSION:-v0.0.0-alpha}\""; \
 	else \
 		echo "Please run 'make install' first" ; \
 	fi
