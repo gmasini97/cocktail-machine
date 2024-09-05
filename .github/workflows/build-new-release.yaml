@@ -7,18 +7,13 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: mircopergreffi/arduino-cli:1.0.4-2.0.17
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    - name: Install Arduino Libraries
-      run: |
-        arduino-cli core update-index
-        arduino-cli config set library.enable_unsafe_install true
-        arduino-cli lib install "ArduinoMenu library"@4.21.4 QDEC@2.1.0 FastAccelStepper@0.30.14 ESP32Servo@3.0.5 WifiManager@2.0.17
-        arduino-cli lib install --git-url https://github.com/fmalpartida/New-LiquidCrystal.git
+    - name: Install Arduino
+      run: make install
     - name: Compile
-      run: arduino-cli compile -b esp32:esp32:esp32doit-devkit-v1 --output-dir build --build-property "build.extra_flags=\"-DVERSION=${{github.event.release.tag_name}}\""
+      run: make BUILD_VERSION=${{github.event.release.tag_name}} build
     - name: Upload Build to Releases
       env:
         GITHUB_TOKEN: ${{ github.TOKEN }}
