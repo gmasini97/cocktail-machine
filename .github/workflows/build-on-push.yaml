@@ -1,0 +1,14 @@
+name: "Build On Push"
+on:
+  push:
+    branches: ["main"]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Install Arduino
+      run: make install
+    - name: Compile
+      run: make BUILD_VERSION=0.0.0 build
