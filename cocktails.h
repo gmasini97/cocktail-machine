@@ -35,6 +35,15 @@ const PYD_cocktail_t cocktailAperolSpritz = {
         {"Soda",10,1}
     }
 };
+const PYD_cocktail_t cocktailBatanga = {
+    "Batanga",
+    3,
+    {
+        {"Tequila",50,0},
+        {"Succo Di Lime",25,0},
+        {"Cola",100,0}
+    }
+};
 const PYD_cocktail_t cocktailBellini = {
     "Bellini",
     2,
@@ -60,6 +69,14 @@ const PYD_cocktail_t cocktailCampariSpritz = {
         {"Soda",10,1}
     }
 };
+const PYD_cocktail_t cocktailCoke = {
+    "Coke",
+    2,
+    {
+        {"Cola",150,0},
+        {"Succo Di Lime",15,0}
+    }
+};
 const PYD_cocktail_t cocktailCosmopolitan = {
     "Cosmopolitan",
     4,
@@ -75,17 +92,17 @@ const PYD_cocktail_t cocktailCubaLibre = {
     3,
     {
         {"Rum",50,0},
-        {"Cola",125,0},
-        {"Succo Di Lime",10,1}
+        {"Cola",100,0},
+        {"Succo Di Lime",15,1}
     }
 };
 const PYD_cocktail_t cocktailDaiquiri = {
     "Daiquiri",
     3,
     {
-        {"Rum Bianco",45,0},
+        {"Rum Bianco",50,0},
         {"Succo Di Lime",25,0},
-        {"Sciroppo Di Zucchero",15,0}
+        {"Sciroppo Di Zucchero",15,1}
     }
 };
 const PYD_cocktail_t cocktailDarkNStormy = {
@@ -176,15 +193,14 @@ const PYD_cocktail_t cocktailLondonMule = {
         {"Ginger Beer",125,0}
     }
 };
-const PYD_cocktail_t cocktailMaiTai = {
-    "Mai-tai",
-    5,
+const PYD_cocktail_t cocktailMaiTaiTwist = {
+    "Mai-Tai Twist",
+    4,
     {
-        {"Rum Bianco",40,0},
-        {"Rum Scuro",20,0},
-        {"Triple Sec",15.0,0},
-        {"Sciroppo Di Zucchero",15.0,0},
-        {"Succo Di Lime",10,0}
+        {"Rum Bianco",50,0},
+        {"Triple Sec",25,0},
+        {"Granatina",15,0},
+        {"Succo Di Lime",25,0}
     }
 };
 const PYD_cocktail_t cocktailManhattan = {
@@ -199,9 +215,18 @@ const PYD_cocktail_t cocktailMargarita = {
     "Margarita",
     3,
     {
-        {"Tequila",35,0},
-        {"Triple Sec",20,0},
+        {"Tequila",50,0},
+        {"Triple Sec",25,0},
         {"Succo Di Lime",15,0}
+    }
+};
+const PYD_cocktail_t cocktailMatador = {
+    "Matador",
+    3,
+    {
+        {"Tequila",50,0},
+        {"Succo D'Ananas",100,0},
+        {"Succo Di Lime",50,0},
     }
 };
 const PYD_cocktail_t cocktailMimosa = {
@@ -248,6 +273,15 @@ const PYD_cocktail_t cocktailOrangeBlossom = {
         {"Vermouth Rosso",50,0}
     }
 };
+const PYD_cocktail_t cocktailPaloma = {
+    "Paloma",
+    3,
+    {
+        {"Tequila",50,0},
+        {"Soda Al Pompelmo",100,0},
+        {"Succo Di Lime",15,0},
+    }
+};
 const PYD_cocktail_t cocktailPineappleRum = {
     "Pineapple Rum",
     2,
@@ -264,6 +298,25 @@ const PYD_cocktail_t cocktailPinaColada = {
         {"Rum Bianco",30,0},
         {"Succo D'Ananas",90,0},
         {"Latte Di Cocco",30,0}
+    }
+};
+const PYD_cocktail_t cocktailRumSunrise = {
+    "Rum Sunrise",
+    3,
+    {
+        {"Rum Bianco",50,0},
+        {"Succo D'Arancia",100,0},
+        {"Granatina",15,0}
+    }
+};
+const PYD_cocktail_t cocktailRumSunset = {
+    "Rum Sunset",
+    3,
+    {
+        {"Rum Bianco",50,0},
+        {"Succo D'Arancia",50,0},
+        {"Cola",50,0},
+        {"Granatina",15,0}
     }
 };
 const PYD_cocktail_t cocktailSanFrancisco = {
@@ -316,9 +369,38 @@ const PYD_cocktail_t cocktailTequilaSunrise = {
     "Tequila Sunrise",
     3,
     {
-        {"Tequila",45,0},
-        {"Succo D'Arancia",90,0},
-        {"Sciroppo Di Zucchero",15,0},
+        {"Tequila",50,0},
+        {"Succo D'Arancia",100,0},
+        {"Granatina",15,0},
+    }
+};
+const PYD_cocktail_t cocktailTequilaSunset = {
+    "Tequila Sunset",
+    4,
+    {
+        {"Tequila",50,0},
+        {"Succo D'Arancia",50,0},
+        {"Cola",50,0},
+        {"Granatina",15,0},
+    }
+};
+const PYD_cocktail_t cocktailTropicalSunrise = {
+    "Tropical Sunrise",
+    3,
+    {
+        {"Rum Bianco",50,0},
+        {"Succo D'Ananas",100,0},
+        {"Granatina",15,0},
+    }
+};
+const PYD_cocktail_t cocktailTropicalSunset = {
+    "Tropical Sunset",
+    4,
+    {
+        {"Rum Bianco",50,0},
+        {"Succo D'Ananas",50,0},
+        {"Cola",50,0},
+        {"Granatina",15,0},
     }
 };
 const PYD_cocktail_t cocktailVesper = {
@@ -330,12 +412,39 @@ const PYD_cocktail_t cocktailVesper = {
         {"Lillet Blonde",8,0},
     }
 };
+const PYD_cocktail_t cocktailVirginPaloma = {
+    "Virgin Paloma",
+    3,
+    {
+        {"Soda Al Pompelmo",125,0},
+        {"Succo D'Ananas",25,0},
+        {"Succo Di Lime",15,0}
+    }
+};
 const PYD_cocktail_t cocktailVirginPinaColada = {
     "Virgin Pina Colada",
     2,
     {
         {"Succo D'Ananas",75,0},
         {"Latte Di Cocco",75,0}
+    }
+};
+const PYD_cocktail_t cocktailVirginSunrise = {
+    "Virgin Sunrise",
+    3,
+    {
+        {"Succo D'Arancia",75,0},
+        {"Succo D'Ananas",75,0},
+        {"Granatina",15,0}
+    }
+};
+const PYD_cocktail_t cocktailVirginSunset = {
+    "Virgin Sunrise",
+    3,
+    {
+        {"Succo D'Arancia",100,0},
+        {"Cola",50,0},
+        {"Granatina",15,0}
     }
 };
 const PYD_cocktail_t cocktailVodkaLemon = {
@@ -384,9 +493,11 @@ const PYD_cocktail_t* PYD_cocktails[] =
 {
     &cocktailAmericano,
     &cocktailAperolSpritz,
+    &cocktailBatanga,
     &cocktailBellini,
     &cocktailBlackRussian,
     &cocktailCampariSpritz,
+    &cocktailCoke,
     &cocktailCosmopolitan,
     &cocktailCubaLibre,
     &cocktailDaiquiri,
@@ -400,23 +511,34 @@ const PYD_cocktail_t* PYD_cocktails[] =
     &cocktailKamikaze,
     &cocktailLemonDropMartini,
     &cocktailLondonMule,
-    &cocktailMaiTai,
+    &cocktailMaiTaiTwist,
     &cocktailManhattan,
     &cocktailMargarita,
+    &cocktailMatador,
     &cocktailMimosa,
     &cocktailMoscowMule,
     &cocktailNegroni,
     &cocktailOrangeBlossom,
+    &cocktailPaloma,
     &cocktailPinaColada,
     &cocktailPineappleRum,
+    &cocktailRumSunrise,
+    &cocktailRumSunset,
+    &cocktailTequilaSunrise,
+    &cocktailTequilaSunset,
+    &cocktailTropicalSunrise,
+    &cocktailTropicalSunset,
     &cocktailScrewdriver,
     &cocktailSanFrancisco,
     &cocktailSeaBreeze,
     &cocktailSexOnTheBeach,
     &cocktailSidecar,
     &cocktailTequilaSunrise,
-    &cocktailVirginPinaColada,
     &cocktailVesper,
+    &cocktailVirginPaloma,
+    &cocktailVirginPinaColada,
+    &cocktailVirginSunrise,
+    &cocktailVirginSunset,
     &cocktailVodkaLemon,
     &cocktailWhiskeySour,
     &cocktailWhiteLady,
