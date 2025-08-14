@@ -439,7 +439,7 @@ const PYD_cocktail_t cocktailVirginSunrise = {
     }
 };
 const PYD_cocktail_t cocktailVirginSunset = {
-    "Virgin Sunrise",
+    "Virgin Sunset",
     3,
     {
         {"Succo D'Arancia",100,0},
@@ -524,16 +524,15 @@ const PYD_cocktail_t* PYD_cocktails[] =
     &cocktailPineappleRum,
     &cocktailRumSunrise,
     &cocktailRumSunset,
-    &cocktailTequilaSunrise,
-    &cocktailTequilaSunset,
-    &cocktailTropicalSunrise,
-    &cocktailTropicalSunset,
-    &cocktailScrewdriver,
     &cocktailSanFrancisco,
+    &cocktailScrewdriver,
     &cocktailSeaBreeze,
     &cocktailSexOnTheBeach,
     &cocktailSidecar,
     &cocktailTequilaSunrise,
+    &cocktailTequilaSunset,
+    &cocktailTropicalSunrise,
+    &cocktailTropicalSunset,
     &cocktailVesper,
     &cocktailVirginPaloma,
     &cocktailVirginPinaColada,
