@@ -36,6 +36,7 @@ const char* PYD_bottles[] =
     "Sciroppo Di Zucchero",
     "Scotch Whisky",
     "Soda",
+    "Soda Al Pompelmo",
     "Succo D'Ananas",
     "Succo D'Arancia",
     "Succo Di Lampone",
