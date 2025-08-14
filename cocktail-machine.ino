@@ -106,6 +106,7 @@ result onPrepareCocktailEnter()
             {
                 Machine.moveServo(Prefs.servoPourAngle, false);
                 int d = round((float)(1000*toPour)/Prefs.pourRate) + Prefs.pourDeadTime;
+                delay(d);
                 toPour = 0;
             }
             Machine.moveServo(Prefs.servoIdleAngle, false);
